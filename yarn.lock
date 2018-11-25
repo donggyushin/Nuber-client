@@ -50,6 +50,14 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
+"@types/styled-components@^4.1.1":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@types/styled-components/-/styled-components-4.1.1.tgz#1a9f8ebff7ee5cbc9ddc08b486e55e5a152bb408"
+  dependencies:
+    "@types/node" "*"
+    "@types/react" "*"
+    csstype "^2.2.0"
+
 "@types/zen-observable@^0.8.0":
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.8.0.tgz#8b63ab7f1aa5321248aad5ac890a485656dcea4d"
@@ -6785,6 +6793,10 @@ style-loader@0.19.0:
   dependencies:
     loader-utils "^1.0.2"
     schema-utils "^0.3.0"
+
+styled-reset@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/styled-reset/-/styled-reset-1.6.1.tgz#80ec719bbcfffa6f7c1bd7781aec2c93145aa47d"
 
 subarg@^1.0.0:
   version "1.0.0"
