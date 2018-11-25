@@ -1,9 +1,13 @@
 import React from "react";
+import {Helmet} from "react-helmet";
 import {Link} from "react-router-dom";
 import "./styles.css";
 
 const OutHomePresenter = () => (
   <div className="outhome__container">
+  <Helmet>
+      <title>Login | Nuber</title>
+  </Helmet>
     <header>
       <div className={"outhome__logo"}>
         <span className={"outhome__title"}>Nuber</span>
