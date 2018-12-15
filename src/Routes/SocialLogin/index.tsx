@@ -1,7 +1,8 @@
 import React from "react";
+import SocialLoginContainer from "./SocialLoginContainer";
 
 const R = () => (
-    <span>lalalal</span>
+    <SocialLoginContainer />
 )
 
 export default R;

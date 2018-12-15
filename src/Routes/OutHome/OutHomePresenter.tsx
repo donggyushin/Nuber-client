@@ -6,11 +6,11 @@ import "./styles.css";
 const OutHomePresenter = () => (
   <div className="outhome__container">
   <Helmet>
-      <title>Login | Nuber</title>
+      <title>Login | Ruber</title>
   </Helmet>
     <header>
       <div className={"outhome__logo"}>
-        <span className={"outhome__title"}>Nuber</span>
+        <span className={"outhome__title"}>Ruber</span>
       </div>
     </header>
     <footer>
@@ -18,14 +18,17 @@ const OutHomePresenter = () => (
         <span className={"outhome__substitle"}>Get moving with Nuber</span>
         <div>
                     <span>🇰🇷 +82</span>
-          <input
-            className={"fakeInput"}
-            placeholder={"Enter your mobile number"}
-          />
+          
+          <div className={"fakeInput"}>
+          <Link to={"/phone-login"} className={"outhome__link"}>
+                            <span>Enter your mobile number</span>
+          </Link>
+            
+          </div>
         </div>
       </div>
       <div className={"outhome__SocialLogin"}>
-        <Link to={"phone-login"}>Or connect with socal</Link>
+        <Link to={"social-login"}>Or connect with socal</Link>
       </div>
     </footer>
   </div>

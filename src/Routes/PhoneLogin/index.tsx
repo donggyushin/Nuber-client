@@ -1,7 +1,8 @@
 import React from "react";
+import PhoneLoginContainer from './PhoneLoginContainer';
 
 const R = () => (
-    <div>lalala</div>
+    <PhoneLoginContainer />
 )
 
 export default R;

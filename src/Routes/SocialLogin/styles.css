@@ -1,0 +1,23 @@
+.SocialLogin_container {
+    padding: 12px;
+}
+
+
+.SocialLogin_container_Arrow {
+    margin-bottom: 40px;
+}
+
+.SocialLogin_container_span {
+    font-size: 1.5rem;
+}
+
+.SocialLogin_container_facebook {
+    display: flex;
+    align-items: flex-end;
+    margin-top: 40px;
+    cursor: pointer;
+}
+
+.SocialLogin_container_facebook_font {
+    margin-left: 7px;
+}
