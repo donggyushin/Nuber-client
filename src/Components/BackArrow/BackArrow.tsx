@@ -10,8 +10,8 @@ const BackArrow = ({ back }) => (
         width="24"
         height="24"
         viewBox="0 0 24 24"
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         className={"BackArrow_container_Arrow"}
         fill="gray"
       >

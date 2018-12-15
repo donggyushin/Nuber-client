@@ -22,6 +22,7 @@
     height: 40px;
     font-size: 0.8rem;
     font-weight: 200;
+    width: 70%;
 }
 
 .PhoneLogin_container_select {
@@ -34,4 +35,17 @@
     font-family: "Maven Pro";
     width: 90%;
     background-color: white;
+}
+
+.PhoneLogin_container_button {
+    border: 0;
+    background-color: white;
+    cursor: pointer;
+    position: absolute;
+    bottom: 50px;
+    right: 20px;
+}
+
+.PhoneLogin_container_form {
+    width: 100%;
 }
