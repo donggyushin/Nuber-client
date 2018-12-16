@@ -217,7 +217,7 @@ const countries = [
     },
     {
         "name": "Korea, Republic of South Korea",
-        "dial_code": "+82",
+        "dial_code": "+8210",
         "code": "KR",
         "flag": "🇰🇷"
     },
