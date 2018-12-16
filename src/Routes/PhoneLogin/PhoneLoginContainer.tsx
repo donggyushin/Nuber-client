@@ -1,10 +1,11 @@
 import React, {Component} from "react";
 import { Mutation } from 'react-apollo';
+import { RouteComponentProps,withRouter } from "react-router-dom";
 import {toast} from 'react-toastify';
 import PhoneLoginPresenter from './PhoneLoginPresenter';
 import { PHONE_SIGN_IN } from './PhoneQueries.queries';
 
-class PhoneLoginContainer extends Component {
+class PhoneLoginContainer extends Component<RouteComponentProps<any>> {
 
 
     public state = {
@@ -27,7 +28,9 @@ class PhoneLoginContainer extends Component {
                     const valid = (dial_code + phone_number).match(phoneno);
                     if (valid) {
                         
-                        mutation();
+                        // mutation();
+                        this.props.history.push(`/verify-phone/${dial_code}${phone_number}`);
+                        return;
                     } else {
                         toast.error("Invalid phone number", {
                             position: toast.POSITION.BOTTOM_CENTER
@@ -74,4 +77,4 @@ class PhoneLoginContainer extends Component {
     
 }
 
-export default PhoneLoginContainer;
+export default withRouter(PhoneLoginContainer);
