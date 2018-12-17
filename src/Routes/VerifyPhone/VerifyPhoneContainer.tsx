@@ -1,12 +1,16 @@
-import React, {Component} from "react";
-import { Mutation } from 'react-apollo';
-import { RouteComponentProps, withRouter } from 'react-router';
+import React from "react";
+import { graphql,Mutation } from 'react-apollo';
+import {  withRouter } from 'react-router';
 import { toast } from 'react-toastify';
+import { LOG_USER_IN } from 'src/sharedQueries';
 import VerifyPhonePresenter from './VerifyPhonePresenter';
 import { VERIFY_PHONE } from './VerifyPhoneQueries';
 
 
-class VerifyPhoneContainer extends Component<RouteComponentProps<any>> {
+
+
+
+class VerifyPhoneContainer extends React.Component<any> {
 
     public state = {
         key:""
@@ -22,17 +26,38 @@ class VerifyPhoneContainer extends Component<RouteComponentProps<any>> {
             <Mutation mutation={VERIFY_PHONE} variables={{key, phoneNumber:phoneNum}}
             onCompleted={(data) => {
                 const response = data.CompletePhoneVerification;
+                console.log(response);
                 if(response.ok){
 
                     toast.success("You're verified, you're logging now", {
                         position: toast.POSITION.BOTTOM_CENTER
                     })
-                    return;
+
+                    setTimeout(() => {
+                        this.props.logUserIn({
+                            variables: {
+                                token: response.token
+                            }
+                        });    
+                    }, 2500);
+
+                    
                 }else {
                     toast.error(response.error, {
                         position:toast.POSITION.BOTTOM_CENTER
                     });
                 }
+            }}
+            update={(cache, {data}) => {
+                console.log(data);
+                // cache.writeData({
+                //     data: {
+                //         auth: {
+                //             __typename: "Auth",
+                //             isLoggedIn: true
+                //         }
+                //     }
+                // })
             }}
             >
             {(mutation, {loading}) => {
@@ -58,7 +83,6 @@ class VerifyPhoneContainer extends Component<RouteComponentProps<any>> {
 
     public handleInput = (event) => {
         const {target: {value}} = event;
-        console.log(value);
         this.setState({
             ...this.state,
             key: value
@@ -68,4 +92,6 @@ class VerifyPhoneContainer extends Component<RouteComponentProps<any>> {
     
 }
 
-export default withRouter(VerifyPhoneContainer);
+export default graphql(LOG_USER_IN, {
+  name: "logUserIn"
+})(withRouter(VerifyPhoneContainer));
