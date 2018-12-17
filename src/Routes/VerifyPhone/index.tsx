@@ -1,7 +1,8 @@
 import React from "react";
+import VerifyPhoneContainer from './VerifyPhoneContainer';
 
 const R = () => (
-    <div>lalala</div>
+    <VerifyPhoneContainer />
 )
 
 export default R;
