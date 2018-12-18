@@ -33,15 +33,18 @@ class VerifyPhoneContainer extends React.Component<any> {
                         position: toast.POSITION.BOTTOM_CENTER
                     })
 
-                    setTimeout(() => {
-                        this.props.logUserIn({
-                            variables: {
-                                token: response.token
-                            }
-                        });    
-                    }, 2500);
+                    if(response.token){
+                        setTimeout(() => {
+                            this.props.logUserIn({
+                                variables: {
+                                    token: response.token
+                                }
+                            });
+                        }, 2500);
+                    }else {
+                        return;
+                    }
 
-                    
                 }else {
                     toast.error(response.error, {
                         position:toast.POSITION.BOTTOM_CENTER
