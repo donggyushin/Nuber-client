@@ -1,7 +1,8 @@
 import React from "react";
+import HomeContainer from './HomeContainer';
 
 const R = () => (
-    <div>lalala</div>
+    <HomeContainer />
 )
 
 export default R;
