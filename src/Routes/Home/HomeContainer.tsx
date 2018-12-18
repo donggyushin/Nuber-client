@@ -3,7 +3,7 @@ import HomePresenter from './HomePresenter';
 
 class HomeContainer extends Component {
     public state = {
-        sidebarOpen: false
+        sidebarOpen: true
     }
     public render(){
         const {sidebarOpen} = this.state;

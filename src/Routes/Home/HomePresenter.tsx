@@ -2,6 +2,7 @@ import React from "react";
 import {Helmet} from "react-helmet";
 import Sidebar from "react-sidebar";
 
+import MenuPresenter from 'src/Components/Menu';
 import "./styles.css";
 
 const HomePresenter = ({ sidebarOpen, onSetSidebarOpen }) => {
@@ -9,9 +10,7 @@ const HomePresenter = ({ sidebarOpen, onSetSidebarOpen }) => {
       <Helmet>
         <title>Ruber | Home</title>
       </Helmet>
-      <Sidebar sidebar={<b>
-            Sidebar content
-          </b>} open={sidebarOpen} onSetOpen={onSetSidebarOpen} 
+      <Sidebar sidebar={<MenuPresenter />} open={sidebarOpen} onSetOpen={onSetSidebarOpen} 
       styles={{
         sidebar: {
           background: "white", width: "80%", zIndex:10
