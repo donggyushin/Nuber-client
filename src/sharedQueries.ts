@@ -5,3 +5,18 @@ export const LOG_USER_IN = gql`
            logUserIn(token:$token) @client
          }
        `;
+
+
+export const USER_PROFILE = gql`
+         query userProfile {
+           GetMyProfile {
+             ok
+             error
+             user {
+               fullName
+               isDriving
+               profilePhoto
+             }
+           }
+         }
+       `;

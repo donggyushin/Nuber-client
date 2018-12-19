@@ -1,15 +1,29 @@
 import React, {Component} from "react";
+import { Query } from 'react-apollo';
+import { USER_PROFILE } from 'src/sharedQueries';
 import HomePresenter from './HomePresenter';
 
 class HomeContainer extends Component {
     public state = {
-        sidebarOpen: true
+        sidebarOpen: false
     }
     public render(){
         const {sidebarOpen} = this.state;
         const {onSetSidebarOpen} = this;
         return (
-            <HomePresenter sidebarOpen={sidebarOpen} onSetSidebarOpen={onSetSidebarOpen} />
+            <Query query={USER_PROFILE}>
+                {({loading, error, data}) => {
+
+                    if(loading){
+                        return "loading..."
+                    }else if(error){
+                        return "There is Error.."
+                    }
+                    
+                    return <HomePresenter sidebarOpen={sidebarOpen} onSetSidebarOpen={onSetSidebarOpen} />;
+                }}
+            </Query>
+            
         )
     }
 
