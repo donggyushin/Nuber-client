@@ -1,7 +1,8 @@
 import React from "react";
+import EditAccountContainer from './EditAccountContainer';
 
 const R = () => (
-    <div>lalala</div>
+    <EditAccountContainer />
 )
 
 export default R;

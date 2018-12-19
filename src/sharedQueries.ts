@@ -16,6 +16,8 @@ export const USER_PROFILE = gql`
                fullName
                isDriving
                profilePhoto
+               firstName
+               lastName
              }
            }
          }

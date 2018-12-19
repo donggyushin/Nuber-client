@@ -1,0 +1,42 @@
+.EditAccount__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+}
+
+.EditAccount__container__BackArrow {
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.EditAccount__container__BackArrow__span {
+    margin-left: 10px;
+}
+
+.EditAccount__container__form {
+    margin-top: 45px;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.EditAccount__container__form__input {
+    border: 0;
+    border-bottom: 1px solid rgba(0,0,0,0.4);
+    height: 45px;
+    font-size: 0.8rem;
+}
+
+.EditAccount__container__form__button {
+    border: 0;
+    background-color: black;
+    color: white;
+    height: 50px;
+    margin-top: 45px;
+    cursor: pointer;
+    font-size: 1rem;
+}
