@@ -1,33 +1,63 @@
 import React from "react";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import "./styles.css";
 
-const MenuPresenter = ({ driving, toggleDriving, name }) => {
-  return <div className={"MenuPresenter__container"}>
+const MenuPresenter = ({ driving, toggleDriving, name, profile }) => {
+  return (
+    <div className={"MenuPresenter__container"}>
       <div className={"MenuPresenter__container__header"}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill={"white"} viewBox="0 0 24 24">
-          <path d="M18 11c-3.313 0-6 2.687-6 6s2.687 6 6 6 6-2.687 
-            6-6-2.687-6-6-6zm-2.888 7.858c.28-.201.147-.446-.025-.649-.073-.086-.474-.5-.519-.426.034-.113-.073-.386-.137-.494-.108-.181-.251-.292-.309-.491-.022-.079-.022-.32-.069-.375l-.158-.117c.139-.828.522-1.572 1.075-2.16l.373-.15c.234-.352.247-.079.458-.17.07 
-            0 .15-.289.226-.334.131-.084.031-.084.006-.123-.051-.083 1.096-.501 1.115-.426.016.063-.567.368-.503.358-.148.02-.176.286-.148.284.074-.002.537-.352.753-.277.211.073.591-.168.74-.291.075-.062.144-.172.242-.172.455 0 1.134.188 1.29.28.237.141-.102.131-.139.223l-.125.206c-.051.066-.199.038-.17-.041.03-.083.174-.115-.043-.135-.222-.021-.284-.17-.506.017-.067.056-.117.143-.161.216l-.272.198c-.06.096.035.256.152.185.031-.019.382.322.337.048-.029-.183.098-.307.101-.444.001-.091.14-.033.103.015-.048.061-.102.267.025.277.055.004.212-.115.23-.026-.026-.086-.177.176-.167.172-.054.024-.117-.01-.075.105.037.113-.204.1-.248.123-.018.01-.208-.057-.204-.014l-.036-.211c-.055.084-.029.256-.147.256-.101 0-.241.115-.301.185-.043.048-.305.153-.333.15.149.016.143.125.13.219-.03.216-.498.016-.478.098.019.079-.054.293-.07.362-.015.062.201.103.188.134l.32-.125.065-.147.175-.089.074-.129c.025-.01.323-.056.344-.046.075.034.213.177.265.242l.114.094-.003.111c.052.097.066-.2.044-.145 0-.095.07.035.086.024l-.329-.327c-.102-.171.272.091.321.123.047.032.142.314.268.251l.053-.115.225-.044c-.178.13.139.301.091.278l.177-.011c.028.011.332.007.283-.041.076.038.041.374-.022.425-.102.084-.591.049-.7-.029-.181-.131-.148.139-.236.176-.171.071-.429-.231-.609-.241.087.014.008-.223.008-.238-.07-.086-.51.009-.626.025-.217.029-.444.026-.611.162l-.238.325-.228.095c-.117.111-.251.276-.317.422l.02.287c-.153.483.038 1.154.625 1.228.143.018.29.095.434.052.115-.035.216-.113.339-.122.171-.011.1.241.335.172.114-.034.166.078.166.163-.038.178-.122.277.041.401.11.085.201.208.221.354.012.083.089.225-.006.273-.068.034-.118.23-.117.295.014.075.166.219.211.282l.072.301.146.293c.051.147.436-.003.525-.003.306.002.461-.429.676-.562l.231-.385c.135-.098.277-.157.289-.337.01-.156-.118-.482-.047-.615.085-.157.985-1.429.717-1.493l-.38.18c-.074.006-.357-.3-.431-.375-.139-.138-.199-.384-.312-.552-.066-.099-.267-.294-.267-.417.009.022.093.164.132.134l.007-.069c-.002.037.235.31.286.339l.229.34c.218.167.158.644.478.354.214-.193.633-.561.521-.896-.059-.178-.33-.047-.413.016-.089-.047-.415-.402-.287-.449.063-.022.202.164.252.192l.238-.003c.068.143.519-.147.625-.105.071.027.126.085.15.157.075.23.149.666.149 1.097 0 2.299-1.864 4.162-4.162 4.162-1.184 0-2.251-.494-3.008-1.286-.09-.094-.158-.318-.009-.409l.151-.039c.116-.096-.112-.501-.022-.566zm4.877-3.974c.18.064.016.188-.088.159-.057-.016-.352-.105-.362.01 0 .069-.28 0-.236-.072l.076-.232c.08-.105.157-.048.159.013 0 .163.165-.154.256-.165l-.044.069c.013.106.09.165.239.218zm-9.93 3.05l-3.059 2.207v-13.068l4-2.886v8.942c.507-.916 1.189-1.719 2-2.37v-6.572l4 2.886v1.997c.328-.042.661-.07 1-.07v-1.929l4-2.479v5.486c.754.437 1.428.992 2 1.642v-10.72l-6.455 4-5.545-4-5.545 4-6.455-4v18l6.455 4 4.137-2.984c-.266-.656-.448-1.354-.533-2.082zm-4.059 2.431l-4-2.479v-13.294l4 2.479v13.294z" />
-        </svg>
+        <img
+          className={"MenuPresenter__container__header__profile"}
+          src={
+            profile
+              ? profile
+              : "data:image/png;base64,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"
+          }
+        />
         <Link to={"/edit-account"}>
-          <span className={"MenuPresenter__container__header__text"}>
-            WELCOME {name}!
-          </span>
+          <div
+            className={"MenuPresenter__container__header__profile__container"}
+          >
+            <span className={"MenuPresenter__container__header__welcome"}>
+              WELCOME
+            </span>
+            <span className={"MenuPresenter__container__header__text"}>
+              {name}!
+            </span>
+          </div>
         </Link>
       </div>
       <div className={"MenuPresenter__container__body"}>
-        <div id={"firstItem"} className={"MenuPresenter__container__body__item"}>
+        <div
+          id={"firstItem"}
+          className={"MenuPresenter__container__body__item"}
+        >
           <Link to={"/trips"}>Trips</Link>
         </div>
         <div className={"MenuPresenter__container__body__item"}>
           <Link to={"/settings"}>Settings</Link>
         </div>
-        <div className={driving ? ["MenuPresenter__container__body__item", "drivingmode", "true"].join(" ") : ["MenuPresenter__container__body__item", "drivingmode", "false"].join(" ")} onClick={toggleDriving}>
+        <div
+          className={
+            driving
+              ? [
+                  "MenuPresenter__container__body__item",
+                  "drivingmode",
+                  "true"
+                ].join(" ")
+              : [
+                  "MenuPresenter__container__body__item",
+                  "drivingmode",
+                  "false"
+                ].join(" ")
+          }
+          onClick={toggleDriving}
+        >
           {driving ? "Stop Driving" : "Start Driving"}
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
 
 export default MenuPresenter;

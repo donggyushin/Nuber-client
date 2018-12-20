@@ -1,0 +1,9 @@
+.LogoutButton__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.LogoutButton__container__span {
+  font-size: 10px;
+  color: white;
+}

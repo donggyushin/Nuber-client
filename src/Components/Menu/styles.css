@@ -1,49 +1,69 @@
 .MenuPresenter__container {
-    height: 100vh;
+  height: 100vh;
 }
 
-
 .MenuPresenter__container__header {
-    background-color: black;
-    color: white;
-    height: 200px;
-    display: flex;
-    align-items: center;
-    padding-left: 30px;
+  background-color: black;
+  color: white;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+}
+
+.MenuPresenter__container__header__profile__container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid white;
+  margin-left: 35px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.MenuPresenter__container__header__welcome {
+  font-size: 10px;
 }
 
 .MenuPresenter__container__header__text {
-    margin-left: 15px;
+  margin-left: 15px;
+  font-size: 1rem;
 }
 
-
 .MenuPresenter__container__body__item {
-  padding: 9px;   
+  padding: 9px;
   font-size: 1.3rem;
 }
 
 #firstItem {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .MenuPresenter__container__body__item.drivingmode.false {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f1c40f;
-    color: white;
-    padding: 15px;
-    margin-top: 12px;
-    cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f1c40f;
+  color: white;
+  padding: 15px;
+  margin-top: 12px;
+  cursor: pointer;
 }
 
 .MenuPresenter__container__body__item.drivingmode.true {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #27ae60;
-    color: white;
-    padding: 15px;
-    margin-top: 12px;
-    cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #27ae60;
+  color: white;
+  padding: 15px;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.MenuPresenter__container__header__profile {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
 }
