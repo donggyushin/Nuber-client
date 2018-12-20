@@ -1,0 +1,24 @@
+
+.PhotoInput__container {
+    display: flex;
+    align-items: center;
+}
+
+.PhotoInput__container__img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    position: relative;
+    right: 50px;
+    border: 1.2px solid black;
+    cursor: pointer;
+}
+
+.PhotoInput__container__input {
+    height: 30px;
+    color: white;
+    cursor: pointer;
+    width: 50px;
+    z-index: 3;
+    opacity: 0;
+}

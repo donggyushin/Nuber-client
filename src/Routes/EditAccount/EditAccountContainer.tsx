@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, {Component} from "react";
 import { Mutation, Query } from 'react-apollo';
 import {withRouter} from "react-router-dom"
@@ -16,7 +17,7 @@ class EditAccountContainer extends Component<any> {
     }
     public render(){
         const {firstName, lastName, profilePhoto} = this.state;
-        return <Query query={USER_PROFILE} onCompleted={this.setField}>
+        return <Query fetchPolicy={"cache-and-network"} query={USER_PROFILE} onCompleted={this.setField}>
             {({loading, error, data}) => {
                 if(loading) {
                     return "loading..."
@@ -72,9 +73,30 @@ class EditAccountContainer extends Component<any> {
     }
 
 
-    public handleInputChange = event => {
+    public handleInputChange = async event => {
         
-        const { target: { name, value } } = event;
+        const { target: { name, value, files } } = event;
+        if(files){
+            
+            const file = files[0];
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("api_key", "549695488835179");
+            formData.append("upload_preset", "ndp6lsvf");
+            formData.append("timestamp", String(Date.now() / 1000));
+            
+            const request = await axios.post(`https://api.cloudinary.com/v1_1/blog-naver-com-donggyu-00/upload`,
+            formData);
+
+            
+
+            const newProfile = request.data.url;
+            this.setState({
+                ...this.state,
+                profilePhoto:newProfile
+            })
+
+        }
         if(name === "firstName") {
             this.setState({
                 ...this.state,
@@ -84,11 +106,6 @@ class EditAccountContainer extends Component<any> {
             this.setState({
                 ...this.state,
                 lastName:value
-            })
-        }else if(name === "profilePhoto"){
-            this.setState({
-                ...this.state,
-                profilePhoto:value
             })
         }
     }

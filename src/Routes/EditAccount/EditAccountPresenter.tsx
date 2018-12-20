@@ -1,5 +1,6 @@
 import React from "react";
 import BackArrow2 from 'src/Components/BackArrow2';
+import PhotoInputPresenter from 'src/Components/PhotoInput';
 import "./styles.css";
 
 const EditAccountPresenter = ({  firstName, lastName,profilePhoto, handleInput, submitFN}) => {
@@ -10,6 +11,9 @@ const EditAccountPresenter = ({  firstName, lastName,profilePhoto, handleInput, 
             Edit Account
           </span>
         </div>
+      <div className={"EditAccount__container__photoInput"}>
+        <PhotoInputPresenter profilePhoto={profilePhoto} handleInput={handleInput} />
+      </div>
         <div className={"EditAccount__container__form"}>
             <input onChange={handleInput} value={firstName} className={"EditAccount__container__form__input"} name={"firstName"} placeholder={"First Name"} />
             <input onChange={handleInput} value={lastName} placeholder={"Last name"} name={"lastName"} className={"EditAccount__container__form__input"} />
