@@ -1,24 +1,29 @@
-import {gql} from "apollo-boost";
+import { gql } from "apollo-boost";
 
 export const LOG_USER_IN = gql`
-         mutation logUserIn($token: String!) {
-           logUserIn(token:$token) @client
-         }
-       `;
+  mutation logUserIn($token: String!) {
+    logUserIn(token: $token) @client
+  }
+`;
 
+export const LOG_USER_OUT = gql`
+  mutation logUserOut {
+    logUserOut @client
+  }
+`;
 
 export const USER_PROFILE = gql`
-         query userProfile {
-           GetMyProfile {
-             ok
-             error
-             user {
-               fullName
-               isDriving
-               profilePhoto
-               firstName
-               lastName
-             }
-           }
-         }
-       `;
+  query userProfile {
+    GetMyProfile {
+      ok
+      error
+      user {
+        fullName
+        isDriving
+        profilePhoto
+        firstName
+        lastName
+      }
+    }
+  }
+`;

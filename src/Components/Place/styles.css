@@ -1,0 +1,17 @@
+.PlacePresenter__container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+.PlacePresenter__container__title {
+  display: flex;
+  flex-direction: column;
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+.PlacePresenter__container__title__detail {
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.6);
+}

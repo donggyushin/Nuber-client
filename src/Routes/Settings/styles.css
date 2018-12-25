@@ -1,0 +1,51 @@
+.settings__container__header {
+  background-color: black;
+  color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.2);
+}
+
+.settings__container__header__span {
+  margin-left: 10px;
+}
+
+.settings__container__profile {
+  margin-top: 70px;
+  display: flex;
+  align-items: center;
+  margin-left: 25px;
+}
+
+.settings__container__profile__img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.settings__container__profile__name {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.settings__container__profile__name__email {
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.settings__container__places__container {
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
+.settings__container__logout {
+  margin-left: 20px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.settings__container__logout__container {
+  margin-top: 40px;
+}
