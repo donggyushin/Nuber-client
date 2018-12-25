@@ -44,8 +44,11 @@
   margin-left: 20px;
   cursor: pointer;
   text-decoration: underline;
+  margin-top: 7px;
 }
 
 .settings__container__logout__container {
   margin-top: 40px;
+  display: flex;
+  flex-direction: column;
 }

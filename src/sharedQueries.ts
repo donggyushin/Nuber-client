@@ -23,6 +23,22 @@ export const USER_PROFILE = gql`
         profilePhoto
         firstName
         lastName
+        email
+      }
+    }
+  }
+`;
+
+export const MY_PLACES = gql`
+  query getMyPlaces {
+    GetMyPlaces {
+      ok
+      error
+      places {
+        id
+        name
+        address
+        isFavorite
       }
     }
   }

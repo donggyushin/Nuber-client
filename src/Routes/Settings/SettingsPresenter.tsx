@@ -1,9 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import BackArrow2 from "src/Components/BackArrow2";
 import PlacePresenter from "src/Components/Place";
 import "./styles.css";
 
-const SettingsPresenter = ({ logUserOut }) => (
+const SettingsPresenter = ({
+  logUserOut,
+  email,
+  profilePhoto,
+  fullName,
+  places,
+  loading
+}) => (
   <div className={"Settings__container"}>
     <div className={"settings__container__header"}>
       <BackArrow2 back={"/"} />
@@ -12,27 +20,32 @@ const SettingsPresenter = ({ logUserOut }) => (
       </span>
     </div>
     <div className={"settings__container__profile"}>
-      <img
-        className={"settings__container__profile__img"}
-        src={
-          "https://i.pinimg.com/originals/53/54/f7/5354f750a2816333f42efbeeacb4e244.jpg"
-        }
-      />
+      <img className={"settings__container__profile__img"} src={profilePhoto} />
       <div className={"settings__container__profile__name"}>
         <span className={"settings__container__profile__name__name"}>
-          Rontend
+          {fullName}
         </span>
         <span className={"settings__container__profile__name__email"}>
-          donggyu9410@gmail.com
+          {email}
         </span>
       </div>
     </div>
     <div className={"settings__container__places__container"}>
-      <PlacePresenter />
-      <PlacePresenter />
-      <PlacePresenter />
+      {places.map(place => {
+        return (
+          <PlacePresenter
+            key={place.id}
+            name={place.name}
+            address={place.address}
+            isFav={place.isFavorite}
+          />
+        );
+      })}
     </div>
     <div className={"settings__container__logout__container"}>
+      <Link to={"/places"}>
+        <span className={"settings__container__logout"}>Go To Places</span>
+      </Link>
       <span onClick={logUserOut} className={"settings__container__logout"}>
         Log Out
       </span>
