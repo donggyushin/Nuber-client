@@ -1,7 +1,3 @@
-import React from "react";
+import AddPlaceContainer from "./AddPlaceContainer";
 
-const R = () => (
-    <div>lalala</div>
-)
-
-export default R;
+export default AddPlaceContainer;
