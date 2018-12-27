@@ -1,7 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import Sidebar from "react-sidebar";
-import LogoutButtonPresenter from "src/Components/LogoutButton";
 import MenuPresenter from "src/Components/Menu";
 import "./styles.css";
 
@@ -46,9 +45,9 @@ const HomePresenter = ({ sidebarOpen, onSetSidebarOpen }) => {
             <span className={"HomePresenter__container__logo__text"}>
               Ruber
             </span>
-            <div className={"HomePresenter__container__logo__logout"}>
+            {/* <div className={"HomePresenter__container__logo__logout"}>
               <LogoutButtonPresenter />
-            </div>
+            </div> */}
           </div>
         </div>
       </Sidebar>

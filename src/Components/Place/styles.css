@@ -1,7 +1,7 @@
 .PlacePresenter__container {
   display: flex;
   align-items: center;
-  margin-bottom: 7px;
+  margin-bottom: 12px;
 }
 
 .PlacePresenter__container__title {

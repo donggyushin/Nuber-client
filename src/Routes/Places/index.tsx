@@ -1,7 +1,3 @@
-import React from "react";
+import PlacesContainer from "./PlacesContainer";
 
-const R = () => (
-    <div>lalala</div>
-)
-
-export default R;
+export default PlacesContainer;

@@ -1,0 +1,22 @@
+.Places__container {
+  width: 100%;
+  height: 100%;
+}
+
+.Places__container__header {
+  background-color: black;
+  box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.2);
+  color: white;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.Places__container__title {
+  margin-left: 10px;
+}
+
+.Places__container__innercontainer {
+  padding: 50px 25px;
+}

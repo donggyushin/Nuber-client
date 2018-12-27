@@ -10,23 +10,23 @@
 
 .HomePresenter__button {
   border: 0;
-  margin-left: 10px;
   position: relative;
   bottom: 30px;
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0);
+  margin-top: 35px;
 }
 
 .HomePresenter__container {
   display: flex;
   justify-content: space-between;
+  padding: 15px;
 }
 
 .HomePresenter__container__logo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 30px;
   margin-right: 13px;
 }
 
