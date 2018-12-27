@@ -6,7 +6,7 @@ import PlacesPresenter from "./PlacesPresenter";
 class PlacesContainer extends Component {
   public render() {
     return (
-      <Query query={MY_PLACES}>
+      <Query query={MY_PLACES} fetchPolicy={"cache-and-network"}>
         {({ loading, error, data }) => {
           if (loading) {
             return "Loading....";

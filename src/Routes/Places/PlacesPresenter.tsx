@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import BackArrow2 from "src/Components/BackArrow2";
-import PlacePresenter from "src/Components/Place";
+import PlaceContainer from "src/Components/Place";
 import "./styles.css";
 
 const PlacesPresenter = ({ places }) => {
@@ -12,12 +12,14 @@ const PlacesPresenter = ({ places }) => {
         <span className={"Places__container__title"}>Places</span>
       </div>
       <div className={"Places__container__innercontainer"}>
-        {places.length === 0 && <WayToAddPlaces />}
+        <WayToAddPlaces />
+        <div className={"Places__container__innercontainer__div"} />
         {places.length !== 0 &&
           places.map(place => {
             return (
-              <PlacePresenter
+              <PlaceContainer
                 key={place.id}
+                id={place.id}
                 name={place.name}
                 address={place.address}
                 isFav={place.isFavorite}
@@ -30,7 +32,14 @@ const PlacesPresenter = ({ places }) => {
 };
 
 const WayToAddPlaces = () => {
-  return <Link to={"/add-place"}>Add some places!</Link>;
+  return (
+    <Link
+      className={"Places__container__innercontainer__link"}
+      to={"/add-place"}
+    >
+      Add some places!
+    </Link>
+  );
 };
 
 export default PlacesPresenter;

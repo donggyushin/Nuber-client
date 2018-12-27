@@ -1,3 +1,3 @@
-import PlacePresenter from "./PlacePresenter";
+import PlaceContainer from "./PlaceContainer";
 
-export default PlacePresenter;
+export default PlaceContainer;

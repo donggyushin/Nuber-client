@@ -38,6 +38,7 @@
 
 .AddPlacePresenter__container__link {
   margin-top: 50px;
+  text-decoration: underline;
 }
 
 .AddPlacePresenter__container__button {
@@ -46,4 +47,5 @@
   border: 0;
   background-color: black;
   color: white;
+  cursor: pointer;
 }

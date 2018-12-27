@@ -20,3 +20,11 @@
 .Places__container__innercontainer {
   padding: 50px 25px;
 }
+
+.Places__container__innercontainer__link {
+  text-decoration: underline;
+}
+
+.Places__container__innercontainer__div {
+  height: 30px;
+}

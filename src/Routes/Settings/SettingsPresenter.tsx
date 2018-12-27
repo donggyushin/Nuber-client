@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import BackArrow2 from "src/Components/BackArrow2";
-import PlacePresenter from "src/Components/Place";
+import PlaceContainer from "src/Components/Place";
 import "./styles.css";
 
 const SettingsPresenter = ({
@@ -33,8 +33,9 @@ const SettingsPresenter = ({
     <div className={"settings__container__places__container"}>
       {places.map(place => {
         return (
-          <PlacePresenter
+          <PlaceContainer
             key={place.id}
+            id={place.id}
             name={place.name}
             address={place.address}
             isFav={place.isFavorite}

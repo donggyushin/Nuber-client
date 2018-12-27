@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import BackArrow2 from "src/Components/BackArrow2";
 import "./styles.css";
 
-const AddPlacePresenter = ({ address, name, handleInputChange }) => {
+const AddPlacePresenter = ({ address, name, handleInputChange, addPlace }) => {
   return (
     <div className={"AddPlacePresenter"}>
       <div className={"AddPlacePresenter__header"}>
@@ -28,7 +28,10 @@ const AddPlacePresenter = ({ address, name, handleInputChange }) => {
         <div className={"AddPlacePresenter__container__link"}>
           <Link to={"/find-address"}>Find address from map</Link>
         </div>
-        <button className={"AddPlacePresenter__container__button"}>
+        <button
+          className={"AddPlacePresenter__container__button"}
+          onClick={addPlace}
+        >
           Submit
         </button>
       </div>

@@ -1,21 +1,62 @@
 import React, { Component } from "react";
+import { Mutation } from "react-apollo";
+import { withRouter } from "react-router-dom";
+import { toast } from "react-toastify";
+import { MY_PLACES } from "src/sharedQueries";
 import AddPlacePresenter from "./AddPlacePresenter";
+import { ADD_PLACE } from "./AddPlaceQueries";
 
-class AddPlaceContainer extends Component {
+class AddPlaceContainer extends Component<any> {
   public state = {
     address: "",
+    lat: 1.34,
+    lng: 1.34,
     name: ""
   };
 
   public render() {
-    const { address, name } = this.state;
+    const { address, lat, lng, name } = this.state;
     const { handleInputChange } = this;
+
     return (
-      <AddPlacePresenter
-        address={address}
-        name={name}
-        handleInputChange={handleInputChange}
-      />
+      <Mutation
+        mutation={ADD_PLACE}
+        variables={{ address, lat, lng, name, isFavorite: false }}
+        onCompleted={data => {
+          console.log(data);
+          const {
+            AddPlace: { ok, error }
+          } = data;
+          if (ok) {
+            toast.success("Adding place...", {
+              position: toast.POSITION.BOTTOM_CENTER
+            });
+            setTimeout(() => {
+              this.props.history.push("/places");
+            }, 3500);
+          } else if (error) {
+            toast.info(`Error ${error}`, {
+              position: toast.POSITION.BOTTOM_CENTER
+            });
+          } else {
+            toast.error("Fail to add place.. T.T", {
+              position: toast.POSITION.BOTTOM_CENTER
+            });
+          }
+        }}
+        refetchQueries={[{ query: MY_PLACES }]}
+      >
+        {(addPlace, { data }) => {
+          return (
+            <AddPlacePresenter
+              address={address}
+              name={name}
+              handleInputChange={handleInputChange}
+              addPlace={addPlace}
+            />
+          );
+        }}
+      </Mutation>
     );
   }
 
@@ -36,4 +77,4 @@ class AddPlaceContainer extends Component {
   };
 }
 
-export default AddPlaceContainer;
+export default withRouter(AddPlaceContainer);
