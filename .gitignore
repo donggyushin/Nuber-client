@@ -9,6 +9,11 @@
 # production
 /build
 
+# secret key
+mapapikey.js
+googlemap.js
+
+
 # misc
 .DS_Store
 .env.local
