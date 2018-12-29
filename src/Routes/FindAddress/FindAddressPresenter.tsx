@@ -1,10 +1,12 @@
 import { GoogleApiWrapper, InfoWindow, Map, Marker } from "google-maps-react";
 import React from "react";
+import AddressBar from "src/Components/AddressBar";
 import { apikey } from "../../googlemap";
 import "./styles.css";
 
 class FindAddressPresenter extends React.Component<any> {
   public state = {
+    address: "",
     initialLat: 0,
     initialLng: 0,
     lat: 0,
@@ -26,13 +28,21 @@ class FindAddressPresenter extends React.Component<any> {
   }
 
   public render() {
-    const { initialLat, initialLng, lat, lng, loading } = this.state;
-
+    const { address, initialLat, initialLng, lat, lng, loading } = this.state;
+    console.log(lat, lng);
     if (loading) {
       return "loading...";
     }
     return (
       <div className={"FindAddressPresenter"}>
+        <div className={"FindAddressPresenter__input"}>
+          <AddressBar
+            onAddressChange={this.handleAddressBar}
+            address={address}
+            onBlur={this.onBlur}
+          />
+        </div>
+
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -47,7 +57,11 @@ class FindAddressPresenter extends React.Component<any> {
         <Map
           google={this.props.google}
           zoom={14}
-          center={{ lat, lng }}
+          center={
+            lat === 0 && lng === 0
+              ? { lat: initialLat, lng: initialLng }
+              : { lat, lng }
+          }
           initialCenter={{ lat: initialLat, lng: initialLng }}
           onDragend={this.centerMoved}
         >
@@ -70,6 +84,7 @@ class FindAddressPresenter extends React.Component<any> {
       lat,
       lng
     });
+    console.log(this.state);
   };
 
   public successGetCurrentPosition = position => {
@@ -79,6 +94,18 @@ class FindAddressPresenter extends React.Component<any> {
       initialLng: position.coords.longitude,
       loading: false
     });
+  };
+
+  public handleAddressBar = event => {
+    const value = event.target.value;
+    this.setState({
+      ...this.state,
+      address: value
+    });
+  };
+
+  public onBlur = () => {
+    console.log("on Blur");
   };
 }
 
