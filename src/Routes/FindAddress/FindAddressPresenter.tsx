@@ -80,20 +80,22 @@ class FindAddressPresenter extends React.Component<any> {
   public centerMoved = async (mapProps, map) => {
     const lat = map.center.lat();
     const lng = map.center.lng();
-    const address = await getAddressFromLatLng(lat, lng);
-    toast.info("Searching...", {
-      position: toast.POSITION.BOTTOM_CENTER
+    this.gettingAddressFromLatLng(lat, lng);
+    this.setState({
+      ...this.state,
+      lat,
+      lng
     });
-    setTimeout(() => {
-      this.setState({
-        ...this.state,
-        address,
-        lat,
-        lng
-      });
-    }, 2500);
+    console.log(this.state);
+  };
 
-    console.log(this.state.address);
+  public gettingAddressFromLatLng = async (lat, lng) => {
+    const address = await getAddressFromLatLng(lat, lng);
+    toast.info("Searching...", { position: toast.POSITION.BOTTOM_CENTER });
+    this.setState({
+      ...this.state,
+      address
+    });
   };
 
   public successGetCurrentPosition = position => {
@@ -103,6 +105,10 @@ class FindAddressPresenter extends React.Component<any> {
       initialLng: position.coords.longitude,
       loading: false
     });
+    this.gettingAddressFromLatLng(
+      position.coords.latitude,
+      position.coords.longitude
+    );
   };
 
   public handleAddressBar = event => {

@@ -14,7 +14,6 @@ class PlaceContainer extends Component<any> {
         refetchQueries={[{ query: MY_PLACES }]}
       >
         {(toggleFav, { data }) => {
-          console.log(data);
           return (
             <PlacePresenter
               name={name}
