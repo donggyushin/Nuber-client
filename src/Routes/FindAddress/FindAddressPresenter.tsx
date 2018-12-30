@@ -2,7 +2,7 @@ import { GoogleApiWrapper, InfoWindow, Map, Marker } from "google-maps-react";
 import React from "react";
 import { toast } from "react-toastify";
 import AddressBar from "src/Components/AddressBar";
-import { getAddressFromLatLng } from "src/geocode";
+import { getAddressFromLatLng, getLatLngFromAddress } from "src/geocode";
 import { apikey } from "../../googlemap";
 import "./styles.css";
 
@@ -119,8 +119,27 @@ class FindAddressPresenter extends React.Component<any> {
     });
   };
 
-  public onBlur = () => {
-    console.log("on Blur");
+  public onBlur = async () => {
+    const { address } = this.state;
+    const location = await getLatLngFromAddress(address);
+    if (!location) {
+      toast.error("Fail to find address", {
+        position: toast.POSITION.BOTTOM_CENTER
+      });
+    } else {
+      const { lat, lng, formattedAddress } = location;
+      toast.info("Searching....", {
+        position: toast.POSITION.BOTTOM_CENTER
+      });
+      setTimeout(() => {
+        this.setState({
+          ...this.state,
+          address: formattedAddress,
+          lat,
+          lng
+        });
+      }, 2500);
+    }
   };
 }
 

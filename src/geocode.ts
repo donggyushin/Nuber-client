@@ -10,7 +10,12 @@ Geocode.enableDebug();
 export const getAddressFromLatLng = async (lat, lng) => {
   const formattedAddress = await Geocode.fromLatLng(lat, lng).then(
     response => {
-      const address = response.results[0].formatted_address;
+      let address = "";
+      if (response.results[0]) {
+        address = response.results[0].formatted_address;
+      } else {
+        address = "Fail to find address";
+      }
 
       return address;
     },
@@ -25,14 +30,17 @@ export const getAddressFromLatLng = async (lat, lng) => {
   return formattedAddress;
 };
 
-export const getLatLngFromAddress = address => {
-  Geocode.fromAddress(address).then(
+export const getLatLngFromAddress = async address => {
+  const location = await Geocode.fromAddress(address).then(
     response => {
       const { lat, lng } = response.results[0].geometry.location;
-      console.log(lat, lng);
+      const formattedAddress = response.results[0].formatted_address;
+      return { lat, lng, formattedAddress };
     },
     error => {
       console.log(error);
+      return null;
     }
   );
+  return location;
 };
