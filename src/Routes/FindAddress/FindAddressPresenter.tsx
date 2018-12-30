@@ -1,6 +1,8 @@
 import { GoogleApiWrapper, InfoWindow, Map, Marker } from "google-maps-react";
 import React from "react";
+import { toast } from "react-toastify";
 import AddressBar from "src/Components/AddressBar";
+import { getAddressFromLatLng } from "src/geocode";
 import { apikey } from "../../googlemap";
 import "./styles.css";
 
@@ -29,7 +31,6 @@ class FindAddressPresenter extends React.Component<any> {
 
   public render() {
     const { address, initialLat, initialLng, lat, lng, loading } = this.state;
-    console.log(lat, lng);
     if (loading) {
       return "loading...";
     }
@@ -76,15 +77,23 @@ class FindAddressPresenter extends React.Component<any> {
     );
   }
 
-  public centerMoved = (mapProps, map) => {
+  public centerMoved = async (mapProps, map) => {
     const lat = map.center.lat();
     const lng = map.center.lng();
-    this.setState({
-      ...this.state,
-      lat,
-      lng
+    const address = await getAddressFromLatLng(lat, lng);
+    toast.info("Searching...", {
+      position: toast.POSITION.BOTTOM_CENTER
     });
-    console.log(this.state);
+    setTimeout(() => {
+      this.setState({
+        ...this.state,
+        address,
+        lat,
+        lng
+      });
+    }, 2500);
+
+    console.log(this.state.address);
   };
 
   public successGetCurrentPosition = position => {
