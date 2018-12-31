@@ -9,10 +9,21 @@ import { ADD_PLACE } from "./AddPlaceQueries";
 class AddPlaceContainer extends Component<any> {
   public state = {
     address: "",
-    lat: 1.34,
-    lng: 1.34,
+    lat: 0,
+    lng: 0,
     name: ""
   };
+
+  public componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        ...this.state,
+        address: this.props.location.state.address || "",
+        lat: this.props.location.state.lat || 0,
+        lng: this.props.location.state.lng || 0
+      });
+    }, 1000);
+  }
 
   public render() {
     const { address, lat, lng, name } = this.state;
@@ -53,6 +64,8 @@ class AddPlaceContainer extends Component<any> {
               name={name}
               handleInputChange={handleInputChange}
               addPlace={addPlace}
+              lat={lat}
+              lng={lng}
             />
           );
         }}

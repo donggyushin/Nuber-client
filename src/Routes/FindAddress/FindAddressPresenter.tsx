@@ -1,7 +1,9 @@
 import { GoogleApiWrapper, InfoWindow, Map, Marker } from "google-maps-react";
 import React from "react";
+import { withRouter } from "react-router";
 import { toast } from "react-toastify";
 import AddressBar from "src/Components/AddressBar";
+import PickButton from "src/Components/PickButton";
 import { getAddressFromLatLng, getLatLngFromAddress } from "src/geocode";
 import { apikey } from "../../googlemap";
 import "./styles.css";
@@ -42,6 +44,10 @@ class FindAddressPresenter extends React.Component<any> {
             address={address}
             onBlur={this.onBlur}
           />
+        </div>
+
+        <div className={"FindAddressPresenter__pickButton"}>
+          <PickButton pickThisAddress={this.pickThisAddress} />
         </div>
 
         <svg
@@ -87,6 +93,19 @@ class FindAddressPresenter extends React.Component<any> {
       lng
     });
     console.log(this.state);
+  };
+
+  public pickThisAddress = () => {
+    const { history } = this.props;
+    const { address, lat, lng } = this.state;
+    history.push({
+      pathname: "/add-place",
+      state: {
+        address,
+        lat,
+        lng
+      }
+    });
   };
 
   public gettingAddressFromLatLng = async (lat, lng) => {
@@ -145,4 +164,4 @@ class FindAddressPresenter extends React.Component<any> {
 
 export default GoogleApiWrapper({
   apiKey: apikey
-})(FindAddressPresenter);
+})(withRouter(FindAddressPresenter));
