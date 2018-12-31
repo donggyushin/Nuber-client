@@ -1,4 +1,4 @@
-import { GoogleApiWrapper, Map } from "google-maps-react";
+import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
 import React from "react";
 import { apikey } from "../../googlemap";
 
@@ -52,14 +52,33 @@ class MainMap extends React.Component<any> {
                   lng: initialLng
                 }
           }
-        />
+        >
+          <Marker
+            name={"Current Location"}
+            title={"Current Location"}
+            position={
+              lat !== 0 && lng !== 0
+                ? { lat, lng }
+                : {
+                    lat: initialLat,
+                    lng: initialLng
+                  }
+            }
+          />
+        </Map>
       );
     }
   }
 
   public successWatch = pos => {
     const { latitude, longitude } = pos.coords;
-    console.log(latitude, longitude);
+    const lat = latitude;
+    const lng = longitude;
+    this.setState({
+      ...this.state,
+      lat,
+      lng
+    });
   };
   public errorWatch = err => {
     console.warn(err.code + err.message);
