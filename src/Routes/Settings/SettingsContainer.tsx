@@ -8,7 +8,7 @@ class SettingsContainer extends Component {
     return (
       <Mutation mutation={LOG_USER_OUT}>
         {logUserOut => (
-          <Query query={USER_PROFILE}>
+          <Query query={USER_PROFILE} fetchPolicy={"cache-and-network"}>
             {({ loading, error, data }) => {
               if (loading) {
                 return "Loading...";
