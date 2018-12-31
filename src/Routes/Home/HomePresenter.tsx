@@ -1,6 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import Sidebar from "react-sidebar";
+import MainMap from "src/Components/MainMap/MainMap";
 import MenuPresenter from "src/Components/Menu";
 import "./styles.css";
 
@@ -10,7 +11,6 @@ const HomePresenter = ({ sidebarOpen, onSetSidebarOpen }) => {
       <Helmet>
         <title>Ruber | Home</title>
       </Helmet>
-
       <Sidebar
         sidebar={<MenuPresenter />}
         open={sidebarOpen}
@@ -18,22 +18,22 @@ const HomePresenter = ({ sidebarOpen, onSetSidebarOpen }) => {
         styles={{ sidebar: { background: "white", width: "80%", zIndex: 10 } }}
       >
         <div className={"HomePresenter__container"}>
-          <div className={"HomePresenter__container__header"}>
-            <button
-              className={"HomePresenter__button"}
-              onClick={() => onSetSidebarOpen()}
+          {/* <div className={"HomePresenter__container__header"}> */}
+          <button
+            className={"HomePresenter__button"}
+            onClick={() => onSetSidebarOpen()}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="black"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="28"
-                height="28"
-                viewBox="0 0 24 24"
-                fill="white"
-              >
-                <path d="M24 6h-24v-4h24v4zm0 4h-24v4h24v-4zm0 8h-24v4h24v-4z" />
-              </svg>
-            </button>
-          </div>
+              <path d="M24 6h-24v-4h24v4zm0 4h-24v4h24v-4zm0 8h-24v4h24v-4z" />
+            </svg>
+          </button>
+          {/* </div> */}
 
           <div className={"HomePresenter__container__logo"}>
             <svg
@@ -53,9 +53,8 @@ const HomePresenter = ({ sidebarOpen, onSetSidebarOpen }) => {
             </div> */}
           </div>
         </div>
+        <MainMap />
       </Sidebar>
-
-      <div className={"empty__div"} />
     </div>
   );
 };

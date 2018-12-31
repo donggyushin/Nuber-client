@@ -13,8 +13,9 @@
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0);
   position: absolute;
-  top: 10px;
+  top: 60px;
   left: 7px;
+  z-index: 7;
 }
 
 .HomePresenter__container {
@@ -35,10 +36,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 13px;
+  margin-right: 7px;
   position: absolute;
-  top: 80px;
-  right: 11px;
+  right: 7px;
+  top: 60px;
+  z-index: 7;
 }
 
 .HomePresenter__container__logo__text {
