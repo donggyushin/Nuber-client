@@ -1,0 +1,8 @@
+.PickAddress {
+  border: 0;
+  background-color: black;
+  color: white;
+  border-radius: 15px;
+  padding: 10px 15px;
+  cursor: pointer;
+}

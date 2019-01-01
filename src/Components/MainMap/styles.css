@@ -1,0 +1,17 @@
+.MainMap__address__bar {
+  z-index: 3;
+  width: 100%;
+  position: absolute;
+  top: 70px;
+  display: flex;
+  justify-content: center;
+}
+
+.MainMap__pickButton {
+  z-index: 3;
+  width: 100%;
+  position: absolute;
+  bottom: 70px;
+  display: flex;
+  justify-content: center;
+}
