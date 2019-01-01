@@ -10,14 +10,19 @@ import "./styles.css";
 class MainMap extends React.Component<any> {
   public state = {
     address: "",
+    centerLat: 0,
+    centerLng: 0,
     dstLat: 0,
     dstLng: 0,
     initialLat: 0,
     initialLng: 0,
     lat: 0,
     lng: 0,
-    loading: true
+    loading: true,
+    zoom: 14
   };
+
+  public bounds;
 
   public componentDidMount() {
     if (navigator.geolocation) {
@@ -44,7 +49,8 @@ class MainMap extends React.Component<any> {
       initialLng,
       lat,
       lng,
-      loading
+      loading,
+      zoom
     } = this.state;
 
     if (loading) {
@@ -53,13 +59,9 @@ class MainMap extends React.Component<any> {
       return (
         <Map
           google={this.props.google}
-          zoom={14}
+          zoom={zoom}
           initialCenter={{ lat: initialLat, lng: initialLng }}
-          center={
-            lat !== 0 && lng !== 0
-              ? { lat, lng }
-              : { lat: initialLat, lng: initialLng }
-          }
+          bounds={this.bounds}
         >
           <div className={"MainMap__address__bar"}>
             <AddressBar
@@ -95,13 +97,17 @@ class MainMap extends React.Component<any> {
   }
 
   public clickPickButton = async () => {
-    const { address } = this.state;
+    const { address, lat, lng } = this.state;
     const coords = await getLatLngFromAddress(address);
     if (!coords) {
       toast.error("Fail to get Location", {
         position: toast.POSITION.BOTTOM_CENTER
       });
     } else {
+      console.log(this.state.dstLat, this.state.dstLng, lat, lng);
+      this.bounds = new this.props.google.maps.LatLngBounds();
+      this.bounds.extend({ lat, lng });
+      this.bounds.extend({ lat: coords.lat, lng: coords.lng });
       this.setState({
         ...this.state,
         address: coords.formattedAddress,
