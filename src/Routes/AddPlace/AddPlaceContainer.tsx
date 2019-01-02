@@ -16,12 +16,14 @@ class AddPlaceContainer extends Component<any> {
 
   public componentDidMount() {
     setTimeout(() => {
-      this.setState({
-        ...this.state,
-        address: this.props.location.state.address || "",
-        lat: this.props.location.state.lat || 0,
-        lng: this.props.location.state.lng || 0
-      });
+      if (this.props.location.state) {
+        this.setState({
+          ...this.state,
+          address: this.props.location.state.address || "",
+          lat: this.props.location.state.lat || 0,
+          lng: this.props.location.state.lng || 0
+        });
+      }
     }, 1000);
   }
 

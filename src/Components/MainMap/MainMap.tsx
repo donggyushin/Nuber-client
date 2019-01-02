@@ -22,6 +22,7 @@ class MainMap extends React.Component<any> {
     duration: "0 mins",
     initialLat: 0,
     initialLng: 0,
+    isDriving: true,
     lat: 0,
     lng: 0,
     loading: true,
@@ -46,6 +47,13 @@ class MainMap extends React.Component<any> {
     } else {
       console.log("Geolocation is not supported by this browser");
     }
+
+    const { userProfile } = this.props;
+    const isDriving = userProfile.GetMyProfile.user.isDriving;
+    this.setState({
+      ...this.state,
+      isDriving
+    });
   }
 
   public render() {
@@ -57,6 +65,7 @@ class MainMap extends React.Component<any> {
       duration,
       initialLat,
       initialLng,
+      isDriving,
       lat,
       lng,
       loading,
@@ -74,13 +83,16 @@ class MainMap extends React.Component<any> {
           bounds={this.bounds}
           ref={map => (this.map = map)}
         >
-          <div className={"MainMap__address__bar"}>
-            <AddressBar
-              onAddressChange={this.onInputChange}
-              address={address}
-              onBlur={null}
-            />
-          </div>
+          {!isDriving && (
+            <div className={"MainMap__address__bar"}>
+              <AddressBar
+                onAddressChange={this.onInputChange}
+                address={address}
+                onBlur={null}
+              />
+            </div>
+          )}
+
           <Marker
             name={"Current Location"}
             title={"Current Location"}
@@ -104,14 +116,22 @@ class MainMap extends React.Component<any> {
               <RequestButton />
             </div>
           )}
+          {address !== "" && (
+            <div className={"MainMap__pickButton"}>
+              <PickAddress clickThisButton={this.clickPickButton} />
+            </div>
+          )}
 
-          <div className={"MainMap__pickButton"}>
-            <PickAddress clickThisButton={this.clickPickButton} />
-          </div>
-          <div className={"MainMap__info"}>
-            <span className={"MainMap__info__item"}>distance: {distance}</span>
-            <span className={"MainMap__info__item"}>duration: {duration}</span>
-          </div>
+          {!isDriving && (
+            <div className={"MainMap__info"}>
+              <span className={"MainMap__info__item"}>
+                distance: {distance}
+              </span>
+              <span className={"MainMap__info__item"}>
+                duration: {duration}
+              </span>
+            </div>
+          )}
         </Map>
       );
     }

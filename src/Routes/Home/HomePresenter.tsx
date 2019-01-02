@@ -5,7 +5,7 @@ import MainMap from "src/Components/MainMap/MainMap";
 import MenuPresenter from "src/Components/Menu";
 import "./styles.css";
 
-const HomePresenter = ({ sidebarOpen, onSetSidebarOpen }) => {
+const HomePresenter = ({ sidebarOpen, onSetSidebarOpen, userProfile }) => {
   return (
     <div className={"HomePresenter"}>
       <Helmet>
@@ -53,7 +53,7 @@ const HomePresenter = ({ sidebarOpen, onSetSidebarOpen }) => {
             </div> */}
           </div>
         </div>
-        <MainMap />
+        <MainMap userProfile={userProfile} />
       </Sidebar>
     </div>
   );

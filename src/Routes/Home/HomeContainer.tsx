@@ -12,7 +12,7 @@ class HomeContainer extends Component {
     const { onSetSidebarOpen } = this;
     return (
       <Query query={USER_PROFILE}>
-        {({ loading, error, data }) => {
+        {({ loading, error, data: userProfile }) => {
           if (loading) {
             return "loading...";
           } else if (error) {
@@ -23,6 +23,7 @@ class HomeContainer extends Component {
             <HomePresenter
               sidebarOpen={sidebarOpen}
               onSetSidebarOpen={onSetSidebarOpen}
+              userProfile={userProfile}
             />
           );
         }}

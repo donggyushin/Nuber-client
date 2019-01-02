@@ -22,7 +22,10 @@ class MenuContainer extends Component {
                 } else {
                   return (
                     <MenuPresenter
-                      toggleDriving={mutation}
+                      toggleDriving={() => {
+                        mutation();
+                        location.reload();
+                      }}
                       name={data.GetMyProfile.user.fullName}
                       driving={data.GetMyProfile.user.isDriving}
                       profile={data.GetMyProfile.user.profilePhoto}
