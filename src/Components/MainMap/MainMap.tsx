@@ -1,11 +1,13 @@
 import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
 import React from "react";
+import { compose, graphql } from "react-apollo";
 import { toast } from "react-toastify";
 import { getLatLngFromAddress } from "src/geocode";
 import { apikey } from "../../googlemap";
 import AddressBar from "../AddressBar";
 import PickAddress from "../PickAddress";
 import RequestButton from "../RequestButton";
+import { REPORT_LOCATION } from "./MainMapQueries";
 import "./styles.css";
 
 class MainMap extends React.Component<any> {
@@ -183,12 +185,19 @@ class MainMap extends React.Component<any> {
 
   public successWatch = pos => {
     const { latitude, longitude } = pos.coords;
+    const { reportLocation } = this.props;
     const lat = latitude;
     const lng = longitude;
     this.setState({
       ...this.state,
       lat,
       lng
+    });
+    reportLocation({
+      variables: {
+        lat,
+        lng
+      }
     });
   };
   public errorWatch = err => {
@@ -213,4 +222,6 @@ const LoadingContainer = props => {
   return <div className={"LoadingContainer"}>Loading....</div>;
 };
 
-export default GoogleApiWrapper({ apiKey: apikey, LoadingContainer })(MainMap);
+export default GoogleApiWrapper({ apiKey: apikey, LoadingContainer })(
+  compose(graphql(REPORT_LOCATION, { name: "reportLocation" }))(MainMap)
+);
