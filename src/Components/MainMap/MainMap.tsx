@@ -5,6 +5,7 @@ import { getLatLngFromAddress } from "src/geocode";
 import { apikey } from "../../googlemap";
 import AddressBar from "../AddressBar";
 import PickAddress from "../PickAddress";
+import RequestButton from "../RequestButton";
 import "./styles.css";
 
 class MainMap extends React.Component<any> {
@@ -13,8 +14,10 @@ class MainMap extends React.Component<any> {
     centerLat: 0,
     centerLng: 0,
     directions: null,
+    distance: "0 km",
     dstLat: 0,
     dstLng: 0,
+    duration: "0 mins",
     initialLat: 0,
     initialLng: 0,
     lat: 0,
@@ -48,6 +51,8 @@ class MainMap extends React.Component<any> {
       address,
       dstLat,
       dstLng,
+      distance,
+      duration,
       initialLat,
       initialLng,
       lat,
@@ -92,9 +97,18 @@ class MainMap extends React.Component<any> {
               }}
             />
           )}
+          {this.state.distance !== "0 km" && this.state.duration !== "0 mins" && (
+            <div className={"MainMap__Request__button"}>
+              <RequestButton />
+            </div>
+          )}
 
           <div className={"MainMap__pickButton"}>
             <PickAddress clickThisButton={this.clickPickButton} />
+          </div>
+          <div className={"MainMap__info"}>
+            <span className={"MainMap__info__item"}>distance: {distance}</span>
+            <span className={"MainMap__info__item"}>duration: {duration}</span>
           </div>
         </Map>
       );
@@ -144,7 +158,11 @@ class MainMap extends React.Component<any> {
               distance: { text: distance },
               duration: { text: duration }
             } = result.routes[0].legs[0];
-            console.log(distance, duration);
+            this.setState({
+              ...this.state,
+              distance,
+              duration
+            });
             this.directions.setDirections(result);
             this.directions.setMap(this.map.map);
           } else {

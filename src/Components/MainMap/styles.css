@@ -15,3 +15,22 @@
   display: flex;
   justify-content: center;
 }
+.MainMap__Request__button {
+  z-index: 3;
+  width: 100%;
+  position: absolute;
+  bottom: 120px;
+  display: flex;
+  justify-content: center;
+}
+
+.MainMap__info {
+  z-index: 3;
+  position: absolute;
+  left: 10px;
+  top: 135px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: bolder;
+}
