@@ -12,6 +12,7 @@ class MainMap extends React.Component<any> {
     address: "",
     centerLat: 0,
     centerLng: 0,
+    directions: null,
     dstLat: 0,
     dstLng: 0,
     initialLat: 0,
@@ -23,6 +24,8 @@ class MainMap extends React.Component<any> {
   };
 
   public bounds;
+  public map;
+  public directions;
 
   public componentDidMount() {
     if (navigator.geolocation) {
@@ -62,6 +65,7 @@ class MainMap extends React.Component<any> {
           zoom={zoom}
           initialCenter={{ lat: initialLat, lng: initialLng }}
           bounds={this.bounds}
+          ref={map => (this.map = map)}
         >
           <div className={"MainMap__address__bar"}>
             <AddressBar
@@ -88,6 +92,7 @@ class MainMap extends React.Component<any> {
               }}
             />
           )}
+
           <div className={"MainMap__pickButton"}>
             <PickAddress clickThisButton={this.clickPickButton} />
           </div>
@@ -104,7 +109,6 @@ class MainMap extends React.Component<any> {
         position: toast.POSITION.BOTTOM_CENTER
       });
     } else {
-      console.log(this.state.dstLat, this.state.dstLng, lat, lng);
       this.bounds = new this.props.google.maps.LatLngBounds();
       this.bounds.extend({ lat, lng });
       this.bounds.extend({ lat: coords.lat, lng: coords.lng });
@@ -114,6 +118,40 @@ class MainMap extends React.Component<any> {
         dstLat: coords.lat,
         dstLng: coords.lng
       });
+      const DirectionService = new this.props.google.maps.DirectionsService();
+      const renderOptions = {
+        polylineOptions: {
+          strokeColor: "#000"
+        },
+        suppressMarkers: true
+      };
+      this.directions = new this.props.google.maps.DirectionsRenderer(
+        renderOptions
+      );
+
+      DirectionService.route(
+        {
+          destination: new this.props.google.maps.LatLng(
+            coords.lat,
+            coords.lng
+          ),
+          origin: new this.props.google.maps.LatLng(lat, lng),
+          travelMode: this.props.google.maps.TravelMode.DRIVING
+        },
+        (result, status) => {
+          if (status === this.props.google.maps.DirectionsStatus.OK) {
+            const {
+              distance: { text: distance },
+              duration: { text: duration }
+            } = result.routes[0].legs[0];
+            console.log(distance, duration);
+            this.directions.setDirections(result);
+            this.directions.setMap(this.map.map);
+          } else {
+            toast.error("fail");
+          }
+        }
+      );
     }
   };
 
@@ -146,6 +184,8 @@ class MainMap extends React.Component<any> {
       ...this.state,
       initialLat: lat,
       initialLng: lng,
+      lat,
+      lng,
       loading: false
     });
   };
