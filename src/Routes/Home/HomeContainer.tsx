@@ -23,7 +23,11 @@ class HomeContainer extends Component {
           const isDriving = userProfile.GetMyProfile.user.isDriving;
 
           return (
-            <Query query={GET_NEARBY_DRIVERS} skip={isDriving}>
+            <Query
+              query={GET_NEARBY_DRIVERS}
+              skip={isDriving}
+              onCompleted={this.handleNearbyDrivers}
+            >
               {() => (
                 <HomePresenter
                   sidebarOpen={sidebarOpen}
@@ -37,6 +41,14 @@ class HomeContainer extends Component {
       </Query>
     );
   }
+
+  public handleNearbyDrivers = data => {
+    const drivers = data.GetNearbyDrivers.drivers;
+    const ok = data.GetNearbyDrivers.ok;
+
+    console.log(drivers);
+    console.log(ok);
+  };
 
   public onSetSidebarOpen = () => {
     this.setState({
