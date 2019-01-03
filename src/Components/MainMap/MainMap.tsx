@@ -17,6 +17,13 @@ class MainMap extends React.Component<any> {
     centerLng: 0,
     directions: null,
     distance: "0 km",
+    drivers: [
+      {
+        id: 0,
+        lastLat: 0,
+        lastLng: 0
+      }
+    ],
     dstLat: 0,
     dstLng: 0,
     duration: "0 mins",
@@ -48,10 +55,11 @@ class MainMap extends React.Component<any> {
       console.log("Geolocation is not supported by this browser");
     }
 
-    const { userProfile } = this.props;
+    const { userProfile, drivers } = this.props;
     const isDriving = userProfile.GetMyProfile.user.isDriving;
     this.setState({
       ...this.state,
+      drivers,
       isDriving
     });
   }
@@ -69,7 +77,8 @@ class MainMap extends React.Component<any> {
       lat,
       lng,
       loading,
-      zoom
+      zoom,
+      drivers
     } = this.state;
 
     if (loading) {
@@ -111,6 +120,24 @@ class MainMap extends React.Component<any> {
               }}
             />
           )}
+          {drivers &&
+            drivers.map(driver => {
+              console.log(driver);
+              if (driver.id !== 0) {
+                return (
+                  <Marker
+                    key={driver.id}
+                    name={"asd"}
+                    position={{ lat: driver.lastLat, lng: driver.lastLng }}
+                    icon={{
+                      url: "http://maps.google.com/mapfiles/ms/micons/cabs.png"
+                    }}
+                  />
+                );
+              } else {
+                return null;
+              }
+            })}
           {this.state.distance !== "0 km" && this.state.duration !== "0 mins" && (
             <div className={"MainMap__Request__button"}>
               <RequestButton />

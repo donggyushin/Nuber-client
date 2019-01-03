@@ -6,6 +6,7 @@ import { GET_NEARBY_DRIVERS } from "./HomeQueries";
 
 class HomeContainer extends Component {
   public state = {
+    drivers: [],
     sidebarOpen: false
   };
   public render() {
@@ -33,6 +34,7 @@ class HomeContainer extends Component {
                   sidebarOpen={sidebarOpen}
                   onSetSidebarOpen={onSetSidebarOpen}
                   userProfile={userProfile}
+                  drivers={this.state.drivers}
                 />
               )}
             </Query>
@@ -46,8 +48,12 @@ class HomeContainer extends Component {
     const drivers = data.GetNearbyDrivers.drivers;
     const ok = data.GetNearbyDrivers.ok;
 
-    console.log(drivers);
-    console.log(ok);
+    if (ok) {
+      this.setState({
+        ...this.state,
+        drivers
+      });
+    }
   };
 
   public onSetSidebarOpen = () => {
