@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Query } from "react-apollo";
 import { USER_PROFILE } from "src/sharedQueries";
 import HomePresenter from "./HomePresenter";
+import { GET_NEARBY_DRIVERS } from "./HomeQueries";
 
 class HomeContainer extends Component {
   public state = {
@@ -20,11 +21,15 @@ class HomeContainer extends Component {
           }
 
           return (
-            <HomePresenter
-              sidebarOpen={sidebarOpen}
-              onSetSidebarOpen={onSetSidebarOpen}
-              userProfile={userProfile}
-            />
+            <Query query={GET_NEARBY_DRIVERS}>
+              {() => (
+                <HomePresenter
+                  sidebarOpen={sidebarOpen}
+                  onSetSidebarOpen={onSetSidebarOpen}
+                  userProfile={userProfile}
+                />
+              )}
+            </Query>
           );
         }}
       </Query>
