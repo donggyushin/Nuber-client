@@ -20,8 +20,10 @@ class HomeContainer extends Component {
             return "There is Error..";
           }
 
+          const isDriving = userProfile.GetMyProfile.user.isDriving;
+
           return (
-            <Query query={GET_NEARBY_DRIVERS}>
+            <Query query={GET_NEARBY_DRIVERS} skip={isDriving}>
               {() => (
                 <HomePresenter
                   sidebarOpen={sidebarOpen}
