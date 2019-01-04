@@ -1,13 +1,13 @@
 import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
 import React from "react";
-import { compose, graphql } from "react-apollo";
+import { compose, graphql, Mutation } from "react-apollo";
 import { toast } from "react-toastify";
-import { getLatLngFromAddress } from "src/geocode";
+import { getAddressFromLatLng, getLatLngFromAddress } from "src/geocode";
 import { apikey } from "../../googlemap";
 import AddressBar from "../AddressBar";
 import PickAddress from "../PickAddress";
 import RequestButton from "../RequestButton";
-import { REPORT_LOCATION } from "./MainMapQueries";
+import { REPORT_LOCATION, REQEUST_RIDE } from "./MainMapQueries";
 import "./styles.css";
 
 class MainMap extends React.Component<any> {
@@ -27,6 +27,7 @@ class MainMap extends React.Component<any> {
     dstLat: 0,
     dstLng: 0,
     duration: "0 mins",
+    fromAddress: "",
     initialLat: 0,
     initialLng: 0,
     isDriving: true,
@@ -89,87 +90,112 @@ class MainMap extends React.Component<any> {
       lng,
       loading,
       zoom,
-      drivers
+      drivers,
+      fromAddress
     } = this.state;
 
     if (loading) {
       return "Loading...";
     } else {
       return (
-        <Map
-          google={this.props.google}
-          zoom={zoom}
-          initialCenter={{ lat: initialLat, lng: initialLng }}
-          bounds={this.bounds}
-          ref={map => (this.map = map)}
+        <Mutation
+          mutation={REQEUST_RIDE}
+          variables={{
+            distance,
+            dropOffAddress: address,
+            dropOffLat: dstLat,
+            dropOffLng: dstLng,
+            duration,
+            pickUpAddress: fromAddress,
+            pickUpLat: lat,
+            pickUpLng: lng,
+            price: 0
+          }}
         >
-          {!isDriving && (
-            <div className={"MainMap__address__bar"}>
-              <AddressBar
-                onAddressChange={this.onInputChange}
-                address={address}
-                onBlur={null}
-              />
-            </div>
-          )}
+          {(requestRide, { data }) => {
+            return (
+              <Map
+                google={this.props.google}
+                zoom={zoom}
+                initialCenter={{ lat: initialLat, lng: initialLng }}
+                bounds={this.bounds}
+                ref={map => (this.map = map)}
+              >
+                {!isDriving && (
+                  <div className={"MainMap__address__bar"}>
+                    <AddressBar
+                      onAddressChange={this.onInputChange}
+                      address={address}
+                      onBlur={null}
+                    />
+                  </div>
+                )}
 
-          <Marker
-            name={"Current Location"}
-            title={"Current Location"}
-            position={
-              lat !== 0 && lng !== 0
-                ? { lat, lng }
-                : { lat: initialLat, lng: initialLng }
-            }
-          />
-          {dstLat !== 0 && dstLng !== 0 && (
-            <Marker
-              name={"destination"}
-              position={{ lat: dstLat, lng: dstLng }}
-              icon={{
-                url: "http://maps.google.com/mapfiles/ms/icons/blue.png"
-              }}
-            />
-          )}
-          {drivers &&
-            drivers.map(driver => {
-              if (driver.id !== 0) {
-                return (
+                <Marker
+                  name={"Current Location"}
+                  title={"Current Location"}
+                  position={
+                    lat !== 0 && lng !== 0
+                      ? { lat, lng }
+                      : { lat: initialLat, lng: initialLng }
+                  }
+                />
+                {dstLat !== 0 && dstLng !== 0 && (
                   <Marker
-                    key={driver.id}
-                    name={"asd"}
-                    position={{ lat: driver.lastLat, lng: driver.lastLng }}
+                    name={"destination"}
+                    position={{ lat: dstLat, lng: dstLng }}
                     icon={{
-                      url: "http://maps.google.com/mapfiles/ms/micons/cabs.png"
+                      url: "http://maps.google.com/mapfiles/ms/icons/blue.png"
                     }}
                   />
-                );
-              } else {
-                return null;
-              }
-            })}
-          {this.state.distance !== "0 km" && this.state.duration !== "0 mins" && (
-            <div className={"MainMap__Request__button"}>
-              <RequestButton />
-            </div>
-          )}
-          {address !== "" && (
-            <div className={"MainMap__pickButton"}>
-              <PickAddress clickThisButton={this.clickPickButton} />
-            </div>
-          )}
+                )}
+                {drivers &&
+                  drivers.map(driver => {
+                    if (driver.id !== 0) {
+                      return (
+                        <Marker
+                          key={driver.id}
+                          name={"asd"}
+                          position={{
+                            lat: driver.lastLat,
+                            lng: driver.lastLng
+                          }}
+                          icon={{
+                            url:
+                              "http://maps.google.com/mapfiles/ms/micons/cabs.png"
+                          }}
+                        />
+                      );
+                    } else {
+                      return null;
+                    }
+                  })}
+                {this.state.distance !== "0 km" &&
+                  this.state.duration !== "0 mins" && (
+                    <div className={"MainMap__Request__button"}>
+                    <RequestButton onClickFN={requestRide} />
+                    </div>
+                  )}
+                {address !== "" && (
+                  <div className={"MainMap__pickButton"}>
+                    <PickAddress clickThisButton={this.clickPickButton} />
+                  </div>
+                )}
 
-          {!isDriving && (
-            <div className={"MainMap__info"}>
-              <span className={"MainMap__info__item"}>
-                distance: {distance}
-              </span>
-              <span className={"MainMap__info__item"}>
-                duration: {duration}
-              </span>
-            </div>
-          )}
-        </Map>
+                {!isDriving && (
+                  <div className={"MainMap__info"}>
+                    <span className={"MainMap__info__item"}>
+                      distance: {distance}
+                    </span>
+                    <span className={"MainMap__info__item"}>
+                      duration: {duration}
+                    </span>
+                  </div>
+                )}
+              </Map>
+            );
+          }}
+        </Mutation>
       );
     }
   }
@@ -273,6 +299,14 @@ class MainMap extends React.Component<any> {
       lng,
       loading: false
     });
+    this.getFromAddress(lat, lng);
+  };
+
+  public getFromAddress = async (lat, lng) => {
+    const fromAddress = await getAddressFromLatLng(lat, lng);
+    if (fromAddress) {
+      this.setState({ ...this.state, fromAddress });
+    }
   };
 }
 

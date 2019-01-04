@@ -24,7 +24,7 @@ export const getAddressFromLatLng = async (lat, lng) => {
       toast.error(error, {
         position: toast.POSITION.BOTTOM_CENTER
       });
-      return "Fail to find address";
+      return null;
     }
   );
   return formattedAddress;
