@@ -10,7 +10,7 @@ class HomeContainer extends Component {
     sidebarOpen: false
   };
   public render() {
-    const { sidebarOpen } = this.state;
+    const { drivers, sidebarOpen } = this.state;
     const { onSetSidebarOpen } = this;
     return (
       <Query query={USER_PROFILE}>
@@ -28,13 +28,14 @@ class HomeContainer extends Component {
               query={GET_NEARBY_DRIVERS}
               skip={isDriving}
               onCompleted={this.handleNearbyDrivers}
+              pollInterval={1000}
             >
               {() => (
                 <HomePresenter
                   sidebarOpen={sidebarOpen}
                   onSetSidebarOpen={onSetSidebarOpen}
                   userProfile={userProfile}
-                  drivers={this.state.drivers}
+                  drivers={drivers}
                 />
               )}
             </Query>

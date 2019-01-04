@@ -40,9 +40,12 @@ class MainMap extends React.Component<any> {
   public map;
   public directions;
 
-  public componentDidMount() {
+  public async componentDidMount() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.successGetCurrentLocation);
+      console.log("componentDidMount, and there is navigator.geolocation");
+      await navigator.geolocation.getCurrentPosition(
+        this.successGetCurrentLocation
+      );
       const options = {
         enableHighAccuracy: true
       };
@@ -61,6 +64,14 @@ class MainMap extends React.Component<any> {
       ...this.state,
       drivers,
       isDriving
+    });
+  }
+
+  public componentWillReceiveProps(nextProps) {
+    const drivers = nextProps.drivers;
+    this.setState({
+      ...this.state,
+      drivers
     });
   }
 
@@ -122,7 +133,6 @@ class MainMap extends React.Component<any> {
           )}
           {drivers &&
             drivers.map(driver => {
-              console.log(driver);
               if (driver.id !== 0) {
                 return (
                   <Marker
@@ -254,6 +264,7 @@ class MainMap extends React.Component<any> {
   public successGetCurrentLocation = position => {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
+    console.log("success to get current location");
     this.setState({
       ...this.state,
       initialLat: lat,
