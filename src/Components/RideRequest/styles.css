@@ -1,0 +1,83 @@
+.RideReuqest__container__inner__passenger__container__profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.RideReuqest__container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.RideReuqest__container__inner {
+  width: 65%;
+  background-color: white;
+  padding: 15px;
+  font-weight: bold;
+  box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+}
+
+.RideReuqest__container__inner__pickUpAddress {
+  display: flex;
+  flex-direction: column;
+}
+
+.RideReuqest__container__inner__pickUpAddress__data {
+  color: #3498db;
+  margin-top: 5px;
+  margin-bottom: 45px;
+}
+
+.RideReuqest__container__inner__dropAddress {
+  display: flex;
+  flex-direction: column;
+}
+
+.RideReuqest__container__inner__dropAddress__data {
+  margin-top: 5px;
+  margin-bottom: 45px;
+  color: #3498db;
+}
+
+.RideReuqest__container__inner__distance {
+  display: flex;
+  flex-direction: column;
+}
+
+.RideReuqest__container__inner__distance__data {
+  margin-top: 5px;
+  margin-bottom: 45px;
+  color: #3498db;
+}
+
+.RideReuqest__container__inner__passenger__container {
+  display: flex;
+  align-items: center;
+  margin-top: 7px;
+}
+
+.RideReuqest__container__inner__passenger__container__profile {
+  margin-right: 10px;
+}
+.RideReuqest__container__inner__passenger__container__name {
+  color: #3498db;
+}
+
+.RideReuqest__container__inner__button__container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.RideReuqest__container__inner__button {
+  margin-top: 35px;
+  width: 80%;
+  height: 35px;
+  background-color: black;
+  color: white;
+  border: 0;
+}

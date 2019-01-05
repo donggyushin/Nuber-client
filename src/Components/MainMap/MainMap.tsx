@@ -7,6 +7,7 @@ import { apikey } from "../../googlemap";
 import AddressBar from "../AddressBar";
 import PickAddress from "../PickAddress";
 import RequestButton from "../RequestButton";
+import RideRequest from "../RideRequest";
 import {
   GET_NEARBY_RIDE,
   REPORT_LOCATION,
@@ -31,6 +32,7 @@ class MainMap extends React.Component<any> {
     dstLat: 0,
     dstLng: 0,
     duration: "0 mins",
+    foundRide: false,
     fromAddress: "",
     initialLat: 0,
     initialLng: 0,
@@ -38,7 +40,18 @@ class MainMap extends React.Component<any> {
     lat: 0,
     lng: 0,
     loading: true,
-    nearbyRide: null,
+    nearbyRide: {
+      dropOffAddress: "",
+      id: 0,
+      passenger: {
+        fullName: "",
+        id: 0,
+        phoneNumber: "",
+        profilePhoto: ""
+      },
+      pickUpAddress: "",
+      status: ""
+    },
     requesting: false,
     zoom: 14
   };
@@ -215,6 +228,11 @@ class MainMap extends React.Component<any> {
                           </span>
                         </div>
                       )}
+                      {this.state.isDriving && this.state.foundRide && (
+                        <div className={"RideRequest_container"}>
+                          <RideRequest />
+                        </div>
+                      )}
                     </Map>
                   );
                 }}
@@ -229,13 +247,16 @@ class MainMap extends React.Component<any> {
   public handleNearbyRide = data => {
     const { GetNearbyRide } = data;
     if (GetNearbyRide.ok) {
-      this.setState({ ...this.state, nearbyRide: GetNearbyRide.ride });
+      this.setState({
+        ...this.state,
+        foundRide: true,
+        nearbyRide: GetNearbyRide.ride
+      });
     } else {
       toast.error(`${GetNearbyRide.error}`, {
         position: toast.POSITION.BOTTOM_CENTER
       });
     }
-    console.log(this.state.nearbyRide);
   };
 
   public clickPickButton = async () => {
@@ -362,7 +383,7 @@ class MainMap extends React.Component<any> {
   };
 }
 
-const LoadingContainer = props => {
+const LoadingContainer = () => {
   return <div className={"LoadingContainer"}>Loading....</div>;
 };
 
