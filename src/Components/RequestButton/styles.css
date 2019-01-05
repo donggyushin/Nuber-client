@@ -4,4 +4,13 @@
   padding: 10px 15px;
   background-color: #f39c12;
   color: white;
+  cursor: pointer;
+}
+
+.RequestingButton {
+  border: 0;
+  border-radius: 15px;
+  padding: 10px 15px;
+  background-color: #e74c3c;
+  color: white;
 }

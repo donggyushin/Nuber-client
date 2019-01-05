@@ -1,10 +1,14 @@
 import React from "react";
 import "./styles.css";
 
-const RequestButton = ({ onClickFN }) => {
+const RequestButton = ({ onClickFN, requesting }) => {
   return (
-    <button onClick={onClickFN} className={"RequestButton"}>
-      Request Ride
+    <button
+      onClick={onClickFN}
+      disabled={requesting}
+      className={requesting ? "RequestingButton" : "RequestButton"}
+    >
+      {requesting ? "Requesting..." : "Request Ride"}
     </button>
   );
 };

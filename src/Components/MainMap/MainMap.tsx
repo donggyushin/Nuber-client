@@ -34,6 +34,7 @@ class MainMap extends React.Component<any> {
     lat: 0,
     lng: 0,
     loading: true,
+    requesting: false,
     zoom: 14
   };
 
@@ -111,6 +112,7 @@ class MainMap extends React.Component<any> {
             pickUpLng: lng,
             price: 0
           }}
+          onCompleted={this.handleRequestRideOnComplete}
         >
           {(requestRide, { data }) => {
             return (
@@ -173,7 +175,10 @@ class MainMap extends React.Component<any> {
                 {this.state.distance !== "0 km" &&
                   this.state.duration !== "0 mins" && (
                     <div className={"MainMap__Request__button"}>
-                    <RequestButton onClickFN={requestRide} />
+                      <RequestButton
+                        onClickFN={requestRide}
+                        requesting={this.state.requesting}
+                      />
                     </div>
                   )}
                 {address !== "" && (
@@ -306,6 +311,20 @@ class MainMap extends React.Component<any> {
     const fromAddress = await getAddressFromLatLng(lat, lng);
     if (fromAddress) {
       this.setState({ ...this.state, fromAddress });
+    }
+  };
+
+  public handleRequestRideOnComplete = data => {
+    const ok = data.RequestRide.ok;
+    if (ok) {
+      toast.success("You ride was requested! Waiting drivers...", {
+        position: toast.POSITION.BOTTOM_CENTER
+      });
+      this.setState({ ...this.state, requesting: true });
+    } else {
+      toast.error(`${data.RequestRide.error}`, {
+        position: toast.POSITION.BOTTOM_CENTER
+      });
     }
   };
 }
