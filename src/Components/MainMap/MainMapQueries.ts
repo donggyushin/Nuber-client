@@ -40,3 +40,24 @@ export const REQEUST_RIDE = gql`
     }
   }
 `;
+
+export const GET_NEARBY_RIDE = gql`
+  query getNearbyRide {
+    GetNearbyRide {
+      ok
+      error
+      ride {
+        id
+        status
+        pickUpAddress
+        dropOffAddress
+        passenger {
+          id
+          phoneNumber
+          profilePhoto
+          fullName
+        }
+      }
+    }
+  }
+`;

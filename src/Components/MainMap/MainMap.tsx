@@ -1,13 +1,17 @@
 import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
 import React from "react";
-import { compose, graphql, Mutation } from "react-apollo";
+import { compose, graphql, Mutation, Query } from "react-apollo";
 import { toast } from "react-toastify";
 import { getAddressFromLatLng, getLatLngFromAddress } from "src/geocode";
 import { apikey } from "../../googlemap";
 import AddressBar from "../AddressBar";
 import PickAddress from "../PickAddress";
 import RequestButton from "../RequestButton";
-import { REPORT_LOCATION, REQEUST_RIDE } from "./MainMapQueries";
+import {
+  GET_NEARBY_RIDE,
+  REPORT_LOCATION,
+  REQEUST_RIDE
+} from "./MainMapQueries";
 import "./styles.css";
 
 class MainMap extends React.Component<any> {
@@ -34,6 +38,7 @@ class MainMap extends React.Component<any> {
     lat: 0,
     lng: 0,
     loading: true,
+    nearbyRide: null,
     requesting: false,
     zoom: 14
   };
@@ -116,94 +121,122 @@ class MainMap extends React.Component<any> {
         >
           {(requestRide, { data }) => {
             return (
-              <Map
-                google={this.props.google}
-                zoom={zoom}
-                initialCenter={{ lat: initialLat, lng: initialLng }}
-                bounds={this.bounds}
-                ref={map => (this.map = map)}
+              <Query
+                query={GET_NEARBY_RIDE}
+                onCompleted={this.handleNearbyRide}
+                skip={!this.state.isDriving}
+                pollInterval={5000}
               >
-                {!isDriving && (
-                  <div className={"MainMap__address__bar"}>
-                    <AddressBar
-                      onAddressChange={this.onInputChange}
-                      address={address}
-                      onBlur={null}
-                    />
-                  </div>
-                )}
-
-                <Marker
-                  name={"Current Location"}
-                  title={"Current Location"}
-                  position={
-                    lat !== 0 && lng !== 0
-                      ? { lat, lng }
-                      : { lat: initialLat, lng: initialLng }
+                {({ error: nearbyError }) => {
+                  if (nearbyError) {
+                    return nearbyError;
                   }
-                />
-                {dstLat !== 0 && dstLng !== 0 && (
-                  <Marker
-                    name={"destination"}
-                    position={{ lat: dstLat, lng: dstLng }}
-                    icon={{
-                      url: "http://maps.google.com/mapfiles/ms/icons/blue.png"
-                    }}
-                  />
-                )}
-                {drivers &&
-                  drivers.map(driver => {
-                    if (driver.id !== 0) {
-                      return (
+
+                  return (
+                    <Map
+                      google={this.props.google}
+                      zoom={zoom}
+                      initialCenter={{ lat: initialLat, lng: initialLng }}
+                      bounds={this.bounds}
+                      ref={map => (this.map = map)}
+                    >
+                      {!isDriving && (
+                        <div className={"MainMap__address__bar"}>
+                          <AddressBar
+                            onAddressChange={this.onInputChange}
+                            address={address}
+                            onBlur={null}
+                          />
+                        </div>
+                      )}
+
+                      <Marker
+                        name={"Current Location"}
+                        title={"Current Location"}
+                        position={
+                          lat !== 0 && lng !== 0
+                            ? { lat, lng }
+                            : { lat: initialLat, lng: initialLng }
+                        }
+                      />
+                      {dstLat !== 0 && dstLng !== 0 && (
                         <Marker
-                          key={driver.id}
-                          name={"asd"}
-                          position={{
-                            lat: driver.lastLat,
-                            lng: driver.lastLng
-                          }}
+                          name={"destination"}
+                          position={{ lat: dstLat, lng: dstLng }}
                           icon={{
                             url:
-                              "http://maps.google.com/mapfiles/ms/micons/cabs.png"
+                              "http://maps.google.com/mapfiles/ms/icons/blue.png"
                           }}
                         />
-                      );
-                    } else {
-                      return null;
-                    }
-                  })}
-                {this.state.distance !== "0 km" &&
-                  this.state.duration !== "0 mins" && (
-                    <div className={"MainMap__Request__button"}>
-                      <RequestButton
-                        onClickFN={requestRide}
-                        requesting={this.state.requesting}
-                      />
-                    </div>
-                  )}
-                {address !== "" && (
-                  <div className={"MainMap__pickButton"}>
-                    <PickAddress clickThisButton={this.clickPickButton} />
-                  </div>
-                )}
+                      )}
+                      {drivers &&
+                        drivers.map(driver => {
+                          if (driver.id !== 0) {
+                            return (
+                              <Marker
+                                key={driver.id}
+                                name={"asd"}
+                                position={{
+                                  lat: driver.lastLat,
+                                  lng: driver.lastLng
+                                }}
+                                icon={{
+                                  url:
+                                    "http://maps.google.com/mapfiles/ms/micons/cabs.png"
+                                }}
+                              />
+                            );
+                          } else {
+                            return null;
+                          }
+                        })}
+                      {this.state.distance !== "0 km" &&
+                        this.state.duration !== "0 mins" && (
+                          <div className={"MainMap__Request__button"}>
+                            <RequestButton
+                              onClickFN={requestRide}
+                              requesting={this.state.requesting}
+                            />
+                          </div>
+                        )}
+                      {address !== "" && (
+                        <div className={"MainMap__pickButton"}>
+                          <PickAddress clickThisButton={this.clickPickButton} />
+                        </div>
+                      )}
 
-                {!isDriving && (
-                  <div className={"MainMap__info"}>
-                    <span className={"MainMap__info__item"}>
-                      distance: {distance}
-                    </span>
-                    <span className={"MainMap__info__item"}>
-                      duration: {duration}
-                    </span>
-                  </div>
-                )}
-              </Map>
+                      {!isDriving && (
+                        <div className={"MainMap__info"}>
+                          <span className={"MainMap__info__item"}>
+                            distance: {distance}
+                          </span>
+                          <span className={"MainMap__info__item"}>
+                            duration: {duration}
+                          </span>
+                        </div>
+                      )}
+                    </Map>
+                  );
+                }}
+              </Query>
             );
           }}
         </Mutation>
       );
     }
   }
+
+  public handleNearbyRide = data => {
+    const { GetNearbyRide } = data;
+    if (GetNearbyRide.ok) {
+      this.setState({ ...this.state, nearbyRide: GetNearbyRide.ride });
+    } else {
+      toast.error(`${GetNearbyRide.error}`, {
+        position: toast.POSITION.BOTTOM_CENTER
+      });
+    }
+    console.log(this.state.nearbyRide);
+  };
 
   public clickPickButton = async () => {
     const { address, lat, lng } = this.state;
