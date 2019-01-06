@@ -50,7 +50,7 @@
 
 .RideReuqest__container__inner__distance__data {
   margin-top: 5px;
-  margin-bottom: 45px;
+  margin-bottom: 15px;
   color: #3498db;
 }
 
@@ -81,4 +81,24 @@
   color: white;
   border: 0;
   cursor: pointer;
+}
+
+.RideReuqest__container__inner__duration {
+  display: flex;
+  flex-direction: column;
+}
+
+.RideReuqest__container__inner__duration__data {
+  color: #3498db;
+  margin-top: 7px;
+  margin-bottom: 15px;
+}
+.RideReuqest__container__inner__status {
+  display: flex;
+  flex-direction: column;
+}
+.RideReuqest__container__inner__status__data {
+  color: #3498db;
+  margin-top: 7px;
+  margin-bottom: 15px;
 }

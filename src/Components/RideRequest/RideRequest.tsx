@@ -1,6 +1,17 @@
 import React from "react";
 import "./styles.css";
-const RideRequest = () => {
+const RideRequest = ({ rideRequest, acceptRide }) => {
+  console.log(rideRequest);
+  const {
+    dropOffAddress,
+    pickUpAddress,
+    status,
+    distance,
+    duration,
+    id
+  } = rideRequest;
+  const passenger = rideRequest.passenger;
+  const { fullName, profilePhoto } = passenger;
   return (
     <div className={"RideReuqest__container"}>
       <div className={"RideReuqest__container__inner"}>
@@ -13,7 +24,7 @@ const RideRequest = () => {
           <span
             className={"RideReuqest__container__inner__pickUpAddress__data"}
           >
-            Home!
+            {pickUpAddress}
           </span>
         </div>
         <div className={"RideReuqest__container__inner__dropAddress"}>
@@ -21,8 +32,7 @@ const RideRequest = () => {
             Drop Off Address
           </span>
           <span className={"RideReuqest__container__inner__dropAddress__data"}>
-            Athens International Airport (ATH), Attiki Odos, Spata Artemia 190
-            04 AJ, Greece
+            {dropOffAddress}
           </span>
         </div>
         <div className={"RideReuqest__container__inner__distance"}>
@@ -30,7 +40,23 @@ const RideRequest = () => {
             Distance
           </span>
           <span className={"RideReuqest__container__inner__distance__data"}>
-            46.1km
+            {distance}
+          </span>
+        </div>
+        <div className={"RideReuqest__container__inner__duration"}>
+          <span className={"RideReuqest__container__inner__duration__title"}>
+            Duration
+          </span>
+          <span className={"RideReuqest__container__inner__duration__data"}>
+            {duration}
+          </span>
+        </div>
+        <div className={"RideReuqest__container__inner__status"}>
+          <span className={"RideReuqest__container__inner__status__title"}>
+            Status
+          </span>
+          <span className={"RideReuqest__container__inner__status__data"}>
+            {status}
           </span>
         </div>
         <div className={"RideReuqest__container__inner__passenger"}>
@@ -45,7 +71,9 @@ const RideRequest = () => {
                 "RideReuqest__container__inner__passenger__container__profile"
               }
               src={
-                "https://cdn150.picsart.com/upscale-245339439045212.png?r1024x1024"
+                profilePhoto
+                  ? profilePhoto
+                  : "https://cdn150.picsart.com/upscale-245339439045212.png?r1024x1024"
               }
             />
             <span
@@ -53,13 +81,21 @@ const RideRequest = () => {
                 "RideReuqest__container__inner__passenger__container__name"
               }
             >
-              donggyu shin
+              {fullName}
             </span>
           </div>
         </div>
         <div className={"RideReuqest__container__inner__button__container"}>
-          <button className={"RideReuqest__container__inner__button"}>
-            ACCEPT RIDE
+          <button
+            className={"RideReuqest__container__inner__button"}
+            disabled={status !== "REQUESTING"}
+            onClick={() => {
+              acceptRide({ variables: { rideId: id } });
+            }}
+          >
+            {status === "REQUESTING"
+              ? "ACCEPT RIDE"
+              : `This Ride Request's status is ${status}`}
           </button>
         </div>
       </div>

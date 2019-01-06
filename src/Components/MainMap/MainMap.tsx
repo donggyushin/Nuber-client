@@ -9,6 +9,7 @@ import PickAddress from "../PickAddress";
 import RequestButton from "../RequestButton";
 import RideRequest from "../RideRequest";
 import {
+  ACCEPT_RIDE_REQUEST,
   GET_NEARBY_RIDE,
   REPORT_LOCATION,
   REQEUST_RIDE
@@ -146,94 +147,113 @@ class MainMap extends React.Component<any> {
                   }
 
                   return (
-                    <Map
-                      google={this.props.google}
-                      zoom={zoom}
-                      initialCenter={{ lat: initialLat, lng: initialLng }}
-                      bounds={this.bounds}
-                      ref={map => (this.map = map)}
+                    <Mutation
+                      mutation={ACCEPT_RIDE_REQUEST}
+                      onCompleted={this.acceptRideMutationHandler}
                     >
-                      {!isDriving && (
-                        <div className={"MainMap__address__bar"}>
-                          <AddressBar
-                            onAddressChange={this.onInputChange}
-                            address={address}
-                            onBlur={null}
-                          />
-                        </div>
-                      )}
+                      {(
+                        acceptRideRequest,
+                        { data: acceptRideResponseData }
+                      ) => {
+                        return (
+                          <Map
+                            google={this.props.google}
+                            zoom={zoom}
+                            initialCenter={{ lat: initialLat, lng: initialLng }}
+                            bounds={this.bounds}
+                            ref={map => (this.map = map)}
+                          >
+                            {!isDriving && (
+                              <div className={"MainMap__address__bar"}>
+                                <AddressBar
+                                  onAddressChange={this.onInputChange}
+                                  address={address}
+                                  onBlur={null}
+                                />
+                              </div>
+                            )}
 
-                      <Marker
-                        name={"Current Location"}
-                        title={"Current Location"}
-                        position={
-                          lat !== 0 && lng !== 0
-                            ? { lat, lng }
-                            : { lat: initialLat, lng: initialLng }
-                        }
-                      />
-                      {dstLat !== 0 && dstLng !== 0 && (
-                        <Marker
-                          name={"destination"}
-                          position={{ lat: dstLat, lng: dstLng }}
-                          icon={{
-                            url:
-                              "http://maps.google.com/mapfiles/ms/icons/blue.png"
-                          }}
-                        />
-                      )}
-                      {drivers &&
-                        drivers.map(driver => {
-                          if (driver.id !== 0) {
-                            return (
+                            <Marker
+                              name={"Current Location"}
+                              title={"Current Location"}
+                              position={
+                                lat !== 0 && lng !== 0
+                                  ? { lat, lng }
+                                  : { lat: initialLat, lng: initialLng }
+                              }
+                            />
+                            {dstLat !== 0 && dstLng !== 0 && (
                               <Marker
-                                key={driver.id}
-                                name={"asd"}
-                                position={{
-                                  lat: driver.lastLat,
-                                  lng: driver.lastLng
-                                }}
+                                name={"destination"}
+                                position={{ lat: dstLat, lng: dstLng }}
                                 icon={{
                                   url:
-                                    "http://maps.google.com/mapfiles/ms/micons/cabs.png"
+                                    "http://maps.google.com/mapfiles/ms/icons/blue.png"
                                 }}
                               />
-                            );
-                          } else {
-                            return null;
-                          }
-                        })}
-                      {this.state.distance !== "0 km" &&
-                        this.state.duration !== "0 mins" && (
-                          <div className={"MainMap__Request__button"}>
-                            <RequestButton
-                              onClickFN={requestRide}
-                              requesting={this.state.requesting}
-                            />
-                          </div>
-                        )}
-                      {address !== "" && (
-                        <div className={"MainMap__pickButton"}>
-                          <PickAddress clickThisButton={this.clickPickButton} />
-                        </div>
-                      )}
+                            )}
+                            {drivers &&
+                              drivers.map(driver => {
+                                if (driver.id !== 0) {
+                                  return (
+                                    <Marker
+                                      key={driver.id}
+                                      name={"asd"}
+                                      position={{
+                                        lat: driver.lastLat,
+                                        lng: driver.lastLng
+                                      }}
+                                      icon={{
+                                        url:
+                                          "http://maps.google.com/mapfiles/ms/micons/cabs.png"
+                                      }}
+                                    />
+                                  );
+                                } else {
+                                  return null;
+                                }
+                              })}
+                            {this.state.distance !== "0 km" &&
+                              this.state.duration !== "0 mins" && (
+                                <div className={"MainMap__Request__button"}>
+                                  <RequestButton
+                                    onClickFN={requestRide}
+                                    requesting={this.state.requesting}
+                                  />
+                                </div>
+                              )}
+                            {address !== "" && (
+                              <div className={"MainMap__pickButton"}>
+                                <PickAddress
+                                  clickThisButton={this.clickPickButton}
+                                />
+                              </div>
+                            )}
 
-                      {!isDriving && (
-                        <div className={"MainMap__info"}>
-                          <span className={"MainMap__info__item"}>
-                            distance: {distance}
-                          </span>
-                          <span className={"MainMap__info__item"}>
-                            duration: {duration}
-                          </span>
-                        </div>
-                      )}
-                      {this.state.isDriving && this.state.foundRide && (
-                        <div className={"RideRequest_container"}>
-                          <RideRequest />
-                        </div>
-                      )}
-                    </Map>
+                            {!isDriving && (
+                              <div className={"MainMap__info"}>
+                                <span className={"MainMap__info__item"}>
+                                  distance: {distance}
+                                </span>
+                                <span className={"MainMap__info__item"}>
+                                  duration: {duration}
+                                </span>
+                              </div>
+                            )}
+                            {this.state.isDriving &&
+                              this.state.foundRide &&
+                              this.state.nearbyRide.id !== 0 && (
+                                <div className={"RideRequest_container"}>
+                                  <RideRequest
+                                    rideRequest={this.state.nearbyRide}
+                                    acceptRide={acceptRideRequest}
+                                  />
+                                </div>
+                              )}
+                          </Map>
+                        );
+                      }}
+                    </Mutation>
                   );
                 }}
               </Query>
@@ -243,6 +263,24 @@ class MainMap extends React.Component<any> {
       );
     }
   }
+
+  public acceptRideMutationHandler = data => {
+    const ok = data.UpdateRideStatus.ok;
+    if (ok) {
+      toast.success("Accepting ride request...", {
+        position: toast.POSITION.BOTTOM_CENTER
+      });
+      this.setState({
+        ...this.state,
+        foundRide: false
+      });
+    } else {
+      const error = data.UpdateRideStatus.error;
+      toast.error(error, {
+        position: toast.POSITION.BOTTOM_CENTER
+      });
+    }
+  };
 
   public handleNearbyRide = data => {
     const { GetNearbyRide } = data;
@@ -310,7 +348,9 @@ class MainMap extends React.Component<any> {
             this.directions.setDirections(result);
             this.directions.setMap(this.map.map);
           } else {
-            toast.error("fail");
+            toast.error(
+              "Google routes to points which are close to the roads at least 5 KMs"
+            );
           }
         }
       );
@@ -350,6 +390,8 @@ class MainMap extends React.Component<any> {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
     console.log("success to get current location");
+    console.log("latitude: " + lat);
+    console.log("longitude: " + lng);
     this.setState({
       ...this.state,
       initialLat: lat,

@@ -49,6 +49,8 @@ export const GET_NEARBY_RIDE = gql`
       ride {
         id
         status
+        distance
+        duration
         pickUpAddress
         dropOffAddress
         passenger {
@@ -58,6 +60,15 @@ export const GET_NEARBY_RIDE = gql`
           fullName
         }
       }
+    }
+  }
+`;
+
+export const ACCEPT_RIDE_REQUEST = gql`
+  mutation updateRideRequest($rideId: Int!) {
+    UpdateRideStatus(rideId: $rideId, status: ACCEPTED) {
+      ok
+      error
     }
   }
 `;
