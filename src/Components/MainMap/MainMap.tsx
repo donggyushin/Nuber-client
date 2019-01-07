@@ -140,7 +140,6 @@ class MainMap extends React.Component<any> {
                 query={GET_NEARBY_RIDE}
                 onCompleted={this.handleNearbyRide}
                 skip={!this.state.isDriving}
-                pollInterval={5000}
               >
                 {({ subscribeToMore, error: nearbyError }) => {
                   if (nearbyError) {
@@ -149,10 +148,27 @@ class MainMap extends React.Component<any> {
 
                   const rideSubscriptionOptions = {
                     document: NEARBY_RIDE_SUBSCRIPTION,
-                    updateQuery: this.handleSubscriptionUpdate
+                    updateQuery: (prev, { subscriptionData }) => {
+                      console.log(prev);
+                      console.log(subscriptionData);
+
+                      if (subscriptionData.data) {
+                        const newRide =
+                          subscriptionData.data.NearbyRideSubscription;
+                        this.setState({
+                          ...this.state,
+                          foundRide: true,
+                          nearbyRide: newRide
+                        });
+                      } else {
+                        return prev;
+                      }
+                    }
                   };
 
-                  subscribeToMore(rideSubscriptionOptions);
+                  if (isDriving) {
+                    subscribeToMore(rideSubscriptionOptions);
+                  }
 
                   return (
                     <Mutation
@@ -271,10 +287,6 @@ class MainMap extends React.Component<any> {
       );
     }
   }
-
-  public handleSubscriptionUpdate = data => {
-    console.log(data);
-  };
 
   public acceptRideMutationHandler = data => {
     const ok = data.UpdateRideStatus.ok;
