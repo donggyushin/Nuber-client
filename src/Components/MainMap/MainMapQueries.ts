@@ -72,3 +72,22 @@ export const ACCEPT_RIDE_REQUEST = gql`
     }
   }
 `;
+
+export const NEARBY_RIDE_SUBSCRIPTION = gql`
+  subscription nearbyRideSubscription {
+    NearbyRideSubscription {
+      id
+      status
+      distance
+      duration
+      pickUpAddress
+      dropOffAddress
+      passenger {
+        id
+        phoneNumber
+        profilePhoto
+        fullName
+      }
+    }
+  }
+`;

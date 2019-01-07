@@ -1,7 +1,6 @@
 import React from "react";
 import "./styles.css";
 const RideRequest = ({ rideRequest, acceptRide }) => {
-  console.log(rideRequest);
   const {
     dropOffAddress,
     pickUpAddress,

@@ -11,6 +11,7 @@ import RideRequest from "../RideRequest";
 import {
   ACCEPT_RIDE_REQUEST,
   GET_NEARBY_RIDE,
+  NEARBY_RIDE_SUBSCRIPTION,
   REPORT_LOCATION,
   REQEUST_RIDE
 } from "./MainMapQueries";
@@ -141,10 +142,17 @@ class MainMap extends React.Component<any> {
                 skip={!this.state.isDriving}
                 pollInterval={5000}
               >
-                {({ error: nearbyError }) => {
+                {({ subscribeToMore, error: nearbyError }) => {
                   if (nearbyError) {
                     return nearbyError;
                   }
+
+                  const rideSubscriptionOptions = {
+                    document: NEARBY_RIDE_SUBSCRIPTION,
+                    updateQuery: this.handleSubscriptionUpdate
+                  };
+
+                  subscribeToMore(rideSubscriptionOptions);
 
                   return (
                     <Mutation
@@ -263,6 +271,10 @@ class MainMap extends React.Component<any> {
       );
     }
   }
+
+  public handleSubscriptionUpdate = data => {
+    console.log(data);
+  };
 
   public acceptRideMutationHandler = data => {
     const ok = data.UpdateRideStatus.ok;
@@ -390,8 +402,7 @@ class MainMap extends React.Component<any> {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
     console.log("success to get current location");
-    console.log("latitude: " + lat);
-    console.log("longitude: " + lng);
+
     this.setState({
       ...this.state,
       initialLat: lat,
