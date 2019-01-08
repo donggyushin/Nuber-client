@@ -1,6 +1,7 @@
 import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
 import React from "react";
 import { compose, graphql, Mutation, Query } from "react-apollo";
+import { withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getAddressFromLatLng, getLatLngFromAddress } from "src/geocode";
 import { apikey } from "../../googlemap";
@@ -290,6 +291,7 @@ class MainMap extends React.Component<any> {
 
   public acceptRideMutationHandler = data => {
     const ok = data.UpdateRideStatus.ok;
+    const { history } = this.props;
     if (ok) {
       toast.success("Accepting ride request...", {
         position: toast.POSITION.BOTTOM_CENTER
@@ -298,6 +300,8 @@ class MainMap extends React.Component<any> {
         ...this.state,
         foundRide: false
       });
+      const rideId = data.UpdateRideStatus.id;
+      history.push(`/ride/${rideId}`);
     } else {
       const error = data.UpdateRideStatus.error;
       toast.error(error, {
@@ -453,5 +457,7 @@ const LoadingContainer = () => {
 };
 
 export default GoogleApiWrapper({ apiKey: apikey, LoadingContainer })(
-  compose(graphql(REPORT_LOCATION, { name: "reportLocation" }))(MainMap)
+  compose(graphql(REPORT_LOCATION, { name: "reportLocation" }))(
+    withRouter(MainMap)
+  )
 );
