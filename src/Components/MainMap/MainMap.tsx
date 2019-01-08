@@ -439,11 +439,14 @@ class MainMap extends React.Component<any> {
 
   public handleRequestRideOnComplete = data => {
     const ok = data.RequestRide.ok;
+    const { history } = this.props;
     if (ok) {
+      const rideId = data.RequestRide.ride.id;
       toast.success("You ride was requested! Waiting drivers...", {
         position: toast.POSITION.BOTTOM_CENTER
       });
       this.setState({ ...this.state, requesting: true });
+      history.push(`/ride/${rideId}`);
     } else {
       toast.error(`${data.RequestRide.error}`, {
         position: toast.POSITION.BOTTOM_CENTER
