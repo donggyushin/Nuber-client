@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Query } from "react-apollo";
 import { withRouter } from "react-router-dom";
 import RidePresenter from "./RidePresenter";
-import { RIDE_QUERY } from "./RideQueries";
+import { RIDE_QUERY, RIDE_SUBSCRIPTION } from "./RideQueries";
 
 class RideContainer extends Component<any> {
   public state = {
@@ -30,7 +30,7 @@ class RideContainer extends Component<any> {
           rideId: this.state.rideId
         }}
       >
-        {({ loading, error, data }) => {
+        {({ loading, error, data, subscribeToMore }) => {
           if (loading) {
             return "Loading...";
           }
@@ -38,8 +38,21 @@ class RideContainer extends Component<any> {
             return `Error! ${error.message}`;
           }
 
-          console.log(data);
           const ride = data.GetRide.ride;
+
+          const subscribeToNewRide = () => {
+            subscribeToMore({
+              document: RIDE_SUBSCRIPTION,
+              updateQuery: (prev, { subscriptionData }) => {
+                if (!subscriptionData.data) {
+                  return prev;
+                }
+                console.log(subscriptionData.data);
+              }
+            });
+          };
+
+          subscribeToNewRide();
 
           return <RidePresenter ride={ride} />;
         }}
