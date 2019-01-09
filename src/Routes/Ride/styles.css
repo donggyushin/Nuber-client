@@ -1,0 +1,115 @@
+.RidePresenter {
+  padding: 25px;
+  padding-left: 35px;
+  height: 100vh;
+}
+
+.RidePresenter__line {
+  padding: 15px;
+  height: 90%;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.6);
+}
+
+.RidePresenter__Profile__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.RidePresenter__Profile__container__Row {
+  display: flex;
+  flex-direction: column;
+}
+
+.RidePresenter__Profile__container__Row__span {
+  font-weight: bolder;
+}
+
+.RidePresenter__Profile__container__Row__data {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.RidePresenter__Profile__container__Row__data__img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.RidePresenter__Profile__container__Row__data__fullName {
+  margin-left: 20px;
+  color: #3498db;
+}
+
+.RidePresenter__Address {
+  display: flex;
+  flex-direction: column;
+}
+
+.RidePresenter__Address__From {
+  display: flex;
+  flex-direction: column;
+}
+
+.RidePresenter__Address__From__span {
+  font-weight: bolder;
+  margin-bottom: 10px;
+}
+
+.RidePresenter__Address__From__pickUpAddress {
+  color: #3498db;
+  margin-bottom: 10px;
+}
+
+.RidePresenter__Profile__container__distance_info {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+
+.RidePresenter__Profile__container__distance_info__distance {
+  display: flex;
+  flex-direction: column;
+}
+
+.RidePresenter__Profile__container__distance_info__distance__span {
+  font-weight: bolder;
+  margin-bottom: 10px;
+}
+
+.RidePresenter__Profile__container__distance_info__distance__data {
+  color: #3498db;
+  margin-bottom: 10px;
+}
+
+.RidePresenter__Profile__container__status {
+  display: flex;
+  flex-direction: column;
+}
+
+.RidePresenter__Profile__container__status__span {
+  font-weight: bolder;
+}
+.RidePresenter__Profile__container__status__data {
+  color: #3498db;
+}
+.RidePresenter__Profile__container__button {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.RidePresenter__Profile__container__button__button {
+  width: 80%;
+  height: 40px;
+  margin-top: 10px;
+  border: 0;
+  background-color: black;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
