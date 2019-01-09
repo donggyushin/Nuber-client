@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles.css";
-const RidePresenter = () => {
+const RidePresenter = ({ ride }) => {
   return (
     <div className={"RidePresenter"}>
       <div className={"RidePresenter__line"}>
@@ -10,7 +10,11 @@ const RidePresenter = () => {
               Passenger
               <div className={"RidePresenter__Profile__container__Row__data"}>
                 <img
-                  src={"https://i.ytimg.com/vi/IwrpEGy40N8/maxresdefault.jpg"}
+                  src={
+                    ride.passenger.profilePhoto
+                      ? ride.passenger.profilePhoto
+                      : `https://grid.gograph.com/anonymous-icon-in-blue-circle-with-long-stock-image_gg76552646.jpg`
+                  }
                   className={
                     "RidePresenter__Profile__container__Row__data__img"
                   }
@@ -20,43 +24,49 @@ const RidePresenter = () => {
                     "RidePresenter__Profile__container__Row__data__fullName"
                   }
                 >
-                  full Name
+                  {ride.passenger.fullName}
                 </span>
               </div>
             </span>
           </div>
-          <div className={"RidePresenter__Profile__container__Row"}>
-            <span className={"RidePresenter__Profile__container__Row__span"}>
-              Driver
-              <div className={"RidePresenter__Profile__container__Row__data"}>
-                <img
-                  src={"https://i.ytimg.com/vi/IwrpEGy40N8/maxresdefault.jpg"}
-                  className={
-                    "RidePresenter__Profile__container__Row__data__img"
-                  }
-                />
-                <span
-                  className={
-                    "RidePresenter__Profile__container__Row__data__fullName"
-                  }
-                >
-                  full Name
-                </span>
-              </div>
-            </span>
-          </div>
+          {ride.driver && (
+            <div className={"RidePresenter__Profile__container__Row"}>
+              <span className={"RidePresenter__Profile__container__Row__span"}>
+                Driver
+                <div className={"RidePresenter__Profile__container__Row__data"}>
+                  <img
+                    src={
+                      ride.driver.profilePhoto
+                        ? ride.driver.profilePhoto
+                        : `https://grid.gograph.com/anonymous-icon-in-blue-circle-with-long-stock-image_gg76552646.jpg`
+                    }
+                    className={
+                      "RidePresenter__Profile__container__Row__data__img"
+                    }
+                  />
+                  <span
+                    className={
+                      "RidePresenter__Profile__container__Row__data__fullName"
+                    }
+                  >
+                    {ride.driver.fullName}
+                  </span>
+                </div>
+              </span>
+            </div>
+          )}
         </div>
         <div className={"RidePresenter__Address"}>
           <div className={"RidePresenter__Address__From"}>
             <span className={"RidePresenter__Address__From__span"}>From</span>
             <span className={"RidePresenter__Address__From__pickUpAddress"}>
-              Pick Up Address
+              {ride.pickUpAddress}
             </span>
           </div>
           <div className={"RidePresenter__Address__From"}>
             <span className={"RidePresenter__Address__From__span"}>To</span>
             <span className={"RidePresenter__Address__From__pickUpAddress"}>
-              Drop Off Address
+              {ride.dropOffAddress}
             </span>
           </div>
         </div>
@@ -78,7 +88,7 @@ const RidePresenter = () => {
                 "RidePresenter__Profile__container__distance_info__distance__data"
               }
             >
-              10 km
+              {ride.distance}
             </span>
           </div>
           <div
@@ -98,7 +108,7 @@ const RidePresenter = () => {
                 "RidePresenter__Profile__container__distance_info__distance__data"
               }
             >
-              10 mins
+              {ride.duration}
             </span>
           </div>
         </div>
@@ -107,7 +117,7 @@ const RidePresenter = () => {
             Status
           </span>
           <span className={"RidePresenter__Profile__container__status__data"}>
-            REQUESTING
+            {ride.status}
           </span>
         </div>
         <div className={"RidePresenter__Profile__container__button"}>
