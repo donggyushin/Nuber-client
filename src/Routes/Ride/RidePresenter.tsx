@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles.css";
-const RidePresenter = ({ ride }) => {
+const RidePresenter = ({ ride, driver }) => {
   return (
     <div className={"RidePresenter"}>
       <div className={"RidePresenter__line"}>
@@ -121,11 +121,14 @@ const RidePresenter = ({ ride }) => {
           </span>
         </div>
         <div className={"RidePresenter__Profile__container__button"}>
-          <button
-            className={"RidePresenter__Profile__container__button__button"}
-          >
-            Pick Up
-          </button>
+          {ride.driver && !driver && (
+            <button
+              className={"RidePresenter__Profile__container__button__button"}
+            >
+              MATCHING
+            </button>
+          )}
+          {driver && `Waiting for user response...`}
         </div>
       </div>
     </div>

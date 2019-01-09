@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { Query } from "react-apollo";
 import { withRouter } from "react-router-dom";
+import { toast } from "react-toastify";
 import RidePresenter from "./RidePresenter";
-import { RIDE_QUERY, RIDE_SUBSCRIPTION } from "./RideQueries";
+import { DRIVER_CHECKER, RIDE_QUERY, RIDE_SUBSCRIPTION } from "./RideQueries";
 
 class RideContainer extends Component<any> {
   public state = {
+    isDriving: true,
     rideId: 0
   };
 
@@ -47,18 +49,45 @@ class RideContainer extends Component<any> {
                 if (!subscriptionData.data) {
                   return prev;
                 }
-                console.log(subscriptionData.data);
               }
             });
           };
 
           subscribeToNewRide();
 
-          return <RidePresenter ride={ride} />;
+          return (
+            <Query
+              query={DRIVER_CHECKER}
+              onCompleted={this.handleDriverChecker}
+            >
+              {() => {
+                return (
+                  <RidePresenter ride={ride} driver={this.state.isDriving} />
+                );
+              }}
+            </Query>
+          );
         }}
       </Query>
     );
   }
+
+  public handleDriverChecker = data => {
+    console.log(data);
+    const ok = data.GetMyProfile.ok;
+    const error = data.GetMyProfile.error;
+    const isDriving = data.GetMyProfile.user.isDriving;
+    if (ok) {
+      this.setState({
+        ...this.state,
+        isDriving
+      });
+    } else {
+      toast.error(`Error! ${error}`, {
+        position: toast.POSITION.BOTTOM_CENTER
+      });
+    }
+  };
 }
 
 export default withRouter(RideContainer);

@@ -49,3 +49,15 @@ export const RIDE_SUBSCRIPTION = gql`
     }
   }
 `;
+
+export const DRIVER_CHECKER = gql`
+  query getMyProfile {
+    GetMyProfile {
+      ok
+      error
+      user {
+        isDriving
+      }
+    }
+  }
+`;
