@@ -61,3 +61,13 @@ export const DRIVER_CHECKER = gql`
     }
   }
 `;
+
+export const UPDATE_RIDE = gql`
+  mutation updateRideStatus($rideId: Int!, $status: rideStatus!) {
+    UpdateRideStatus(rideId: $rideId, status: $status) {
+      ok
+      error
+      id
+    }
+  }
+`;

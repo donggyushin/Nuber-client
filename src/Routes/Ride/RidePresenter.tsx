@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles.css";
-const RidePresenter = ({ ride, driver }) => {
+const RidePresenter = ({ ride, driver, updateRide }) => {
   return (
     <div className={"RidePresenter"}>
       <div className={"RidePresenter__line"}>
@@ -121,14 +121,36 @@ const RidePresenter = ({ ride, driver }) => {
           </span>
         </div>
         <div className={"RidePresenter__Profile__container__button"}>
-          {ride.driver && !driver && (
+          {ride.driver && driver && ride.status === "ACCEPTED" && (
             <button
               className={"RidePresenter__Profile__container__button__button"}
+              onClick={() => {
+                updateRide({
+                  variables: { rideId: ride.id, status: "ONROUTE" }
+                });
+              }}
             >
               MATCHING
             </button>
           )}
-          {driver && `Waiting for user response...`}
+          {ride.driver && driver && ride.status === "ONROUTE" && (
+            <button
+              className={"RidePresenter__Profile__container__button__button"}
+              onClick={() => {
+                updateRide({
+                  variables: { rideId: ride.id, status: "FINISHED" }
+                });
+              }}
+            >
+              FINISH
+            </button>
+          )}
+          {!driver &&
+            ride.status === "ACCEPTED" &&
+            `Waiting for driver response...`}
+          {!driver &&
+            ride.status === "ONROUTE" &&
+            `Matched with ${ride.driver.fullName}!`}
         </div>
       </div>
     </div>

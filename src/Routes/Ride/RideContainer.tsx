@@ -1,9 +1,14 @@
 import React, { Component } from "react";
-import { Query } from "react-apollo";
+import { Mutation, Query } from "react-apollo";
 import { withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
 import RidePresenter from "./RidePresenter";
-import { DRIVER_CHECKER, RIDE_QUERY, RIDE_SUBSCRIPTION } from "./RideQueries";
+import {
+  DRIVER_CHECKER,
+  RIDE_QUERY,
+  RIDE_SUBSCRIPTION,
+  UPDATE_RIDE
+} from "./RideQueries";
 
 class RideContainer extends Component<any> {
   public state = {
@@ -62,7 +67,17 @@ class RideContainer extends Component<any> {
             >
               {() => {
                 return (
-                  <RidePresenter ride={ride} driver={this.state.isDriving} />
+                  <Mutation mutation={UPDATE_RIDE}>
+                    {updateRide => {
+                      return (
+                        <RidePresenter
+                          ride={ride}
+                          driver={this.state.isDriving}
+                          updateRide={updateRide}
+                        />
+                      );
+                    }}
+                  </Mutation>
                 );
               }}
             </Query>
