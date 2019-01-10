@@ -54,6 +54,11 @@ class RideContainer extends Component<any> {
                 if (!subscriptionData.data) {
                   return prev;
                 }
+                const status =
+                  subscriptionData.data.RideStatusSubscription.status;
+                if (status === "FINISHED") {
+                  window.location.href = "/";
+                }
               }
             });
           };
