@@ -54,10 +54,22 @@ class RideContainer extends Component<any> {
                 if (!subscriptionData.data) {
                   return prev;
                 }
+                console.log(subscriptionData.data);
+                const rideId = this.state.rideId;
                 const status =
                   subscriptionData.data.RideStatusSubscription.status;
+                const chatId =
+                  subscriptionData.data.RideStatusSubscription.chatId;
                 if (status === "FINISHED") {
                   window.location.href = "/";
+                }
+                if (status === "ONROUTE") {
+                  toast.info("connecting chat....", {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  });
+                  setTimeout(() => {
+                    window.location.href = `/chat/${chatId}/${rideId}`;
+                  }, 3500);
                 }
               }
             });

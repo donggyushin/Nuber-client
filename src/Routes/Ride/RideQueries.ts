@@ -8,6 +8,7 @@ export const RIDE_QUERY = gql`
       ride {
         id
         status
+        chatId
         pickUpAddress
         dropOffAddress
         duration
@@ -32,6 +33,7 @@ export const RIDE_SUBSCRIPTION = gql`
     RideStatusSubscription {
       id
       status
+      chatId
       pickUpAddress
       dropOffAddress
       duration
@@ -68,6 +70,7 @@ export const UPDATE_RIDE = gql`
       ok
       error
       id
+      chatId
     }
   }
 `;
