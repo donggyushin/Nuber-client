@@ -1,0 +1,14 @@
+.MyMessagePresenter {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.MyMessagePresenter__messagebox {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border-radius: 15px;
+  border-top-right-radius: 0;
+  margin-bottom: 7px;
+}

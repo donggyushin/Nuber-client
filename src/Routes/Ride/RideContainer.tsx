@@ -36,6 +36,7 @@ class RideContainer extends Component<any> {
         variables={{
           rideId: this.state.rideId
         }}
+        onCompleted={this.handleRideQuery}
       >
         {({ loading, error, data, subscribeToMore }) => {
           if (loading) {
@@ -54,7 +55,6 @@ class RideContainer extends Component<any> {
                 if (!subscriptionData.data) {
                   return prev;
                 }
-                console.log(subscriptionData.data);
                 const rideId = this.state.rideId;
                 const status =
                   subscriptionData.data.RideStatusSubscription.status;
@@ -104,6 +104,13 @@ class RideContainer extends Component<any> {
       </Query>
     );
   }
+
+  public handleRideQuery = data => {
+    const status = data.GetRide.ride.status;
+    if (status === "FINISHED") {
+      window.location.href = "/";
+    }
+  };
 
   public handleDriverChecker = data => {
     console.log(data);

@@ -1,0 +1,13 @@
+.OpponentMessagePresenter {
+  width: 100%;
+  display: flex;
+}
+
+.OpponentMessagePresenter__messagebox {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  border-radius: 15px;
+  border-top-left-radius: 0px;
+  padding: 10px 20px;
+  margin-bottom: 7px;
+}
