@@ -69,6 +69,7 @@ class RideContainer extends Component<any> {
             <Query
               query={DRIVER_CHECKER}
               onCompleted={this.handleDriverChecker}
+              fetchPolicy={"cache-and-network"}
             >
               {() => {
                 return (

@@ -1,6 +1,7 @@
 import React from "react";
 import "./styles.css";
 const RidePresenter = ({ ride, driver, updateRide }) => {
+  console.log(driver);
   return (
     <div className={"RidePresenter"}>
       <div className={"RidePresenter__line"}>
