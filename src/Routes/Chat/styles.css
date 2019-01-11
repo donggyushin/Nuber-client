@@ -29,8 +29,7 @@
 }
 
 .ChatPresenter__body {
-  flex-grow: 1;
-  padding-bottom: 115px;
+  height: 80%;
   padding: 15px;
   display: flex;
   flex-direction: column;

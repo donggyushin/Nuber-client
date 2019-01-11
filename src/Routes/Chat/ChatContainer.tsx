@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Mutation, Query } from "react-apollo";
 import ChatPresenter from "./ChatPresenter";
+
 import {
   GET_CHAT,
   GET_FULLNAME,
@@ -19,11 +20,9 @@ class ChatContainer extends Component<any> {
 
   public componentDidMount() {
     const { rideId, chatId } = this.props.match.params;
+
     if (rideId) {
-      this.setState({
-        ...this.state,
-        rideId
-      });
+      this.setState({ ...this.state, rideId: parseInt(rideId, 10) });
     }
     if (chatId) {
       this.setState({
@@ -57,8 +56,6 @@ class ChatContainer extends Component<any> {
                 if (newMessage.id === latestMessageId) {
                   return;
                 }
-                console.log(prev);
-                console.log(newMessage);
 
                 return Object.assign({}, prev, {
                   GetChat: {
@@ -128,7 +125,7 @@ class ChatContainer extends Component<any> {
   };
 
   public finishChat = () => {
-    const { rideId } = this.state;
+    const { rideId } = this.props.match.params;
     window.location.href = `/ride/${rideId}`;
   };
 }

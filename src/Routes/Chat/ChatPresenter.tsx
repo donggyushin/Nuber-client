@@ -22,7 +22,7 @@ const ChatPresenter = ({
           FINISH CHAT
         </button>
       </div>
-      <div className={"ChatPresenter__body"}>
+      <div className={"ChatPresenter__body"} id={"chat__body"}>
         {messages.map(message => {
           if (fullName === message.user.fullName) {
             return (
