@@ -1,9 +1,9 @@
 import React from "react";
 import "./styles.css";
-const MyMessagePresenter = () => {
+const MyMessagePresenter = ({ text }) => {
   return (
     <div className={"MyMessagePresenter"}>
-      <div className={"MyMessagePresenter__messagebox"}>I MiSS YOU!</div>
+      <div className={"MyMessagePresenter__messagebox"}>{text}</div>
     </div>
   );
 };

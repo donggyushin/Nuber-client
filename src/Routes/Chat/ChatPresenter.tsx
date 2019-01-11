@@ -3,7 +3,14 @@ import MyMessagePresenter from "src/Components/MyMessage";
 import OpponentMessagePresenter from "src/Components/OpponentMessage";
 import "./styles.css";
 
-const ChatPresenter = ({ clickFinishButton }) => {
+const ChatPresenter = ({
+  clickFinishButton,
+  messages,
+  fullName,
+  handleInput,
+  handlePress,
+  text
+}) => {
   return (
     <div className={"ChatPresenter"}>
       <div className={"ChatPresenter__header"}>
@@ -16,17 +23,32 @@ const ChatPresenter = ({ clickFinishButton }) => {
         </button>
       </div>
       <div className={"ChatPresenter__body"}>
-        <div className={"ChatPresenter__body__opponent"}>
-          <OpponentMessagePresenter />
-        </div>
-        <div className={"ChatPresenter__body__my"}>
-          <MyMessagePresenter />
-        </div>
+        {messages.map(message => {
+          if (fullName === message.user.fullName) {
+            return (
+              <div className={"ChatPresenter__body__my"}>
+                <MyMessagePresenter key={message.id} text={message.text} />
+              </div>
+            );
+          } else {
+            return (
+              <div className={"ChatPresenter__body__opponent"}>
+                <OpponentMessagePresenter
+                  key={message.id}
+                  text={message.text}
+                />
+              </div>
+            );
+          }
+        })}
       </div>
       <div className={"ChatPresenter__bottom"}>
         <input
           className={"ChatPresenter__bottom__input"}
           placeholder={"Gyu Talk!"}
+          value={text}
+          onChange={handleInput}
+          onKeyPress={handlePress}
         />
       </div>
     </div>
